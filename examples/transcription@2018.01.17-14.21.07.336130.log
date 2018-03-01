@@ -1,0 +1,2953 @@
+task = transcription
+
+network:
+task = transcription
+13MultilayerNet
+------------------------------
+26 layers:
+10InputLayer "input" 2D (++) size 1
+10BlockLayer "input_block" 2D (++) size 12 source "input" block 3 4
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_0_0" 2D (--) inputSize 10 outputSize 2 source "input_block" 8 peeps
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_0_1" 2D (-+) inputSize 10 outputSize 2 source "input_block" 8 peeps
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_0_2" 2D (+-) inputSize 10 outputSize 2 source "input_block" 8 peeps
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_0_3" 2D (++) inputSize 10 outputSize 2 source "input_block" 8 peeps
+10BlockLayer "hidden_0_0_block" 2D (++) size 24 source "hidden_0_0" block 3 4
+10BlockLayer "hidden_0_1_block" 2D (++) size 24 source "hidden_0_1" block 3 4
+10BlockLayer "hidden_0_2_block" 2D (++) size 24 source "hidden_0_2" block 3 4
+10BlockLayer "hidden_0_3_block" 2D (++) size 24 source "hidden_0_3" block 3 4
+11NeuronLayerI4TanhE "subsample_0" 2D (++) size 6 source "hidden_0_0_block"
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_1_0" 2D (--) inputSize 50 outputSize 10 source "subsample_0" 40 peeps
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_1_1" 2D (-+) inputSize 50 outputSize 10 source "subsample_0" 40 peeps
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_1_2" 2D (+-) inputSize 50 outputSize 10 source "subsample_0" 40 peeps
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_1_3" 2D (++) inputSize 50 outputSize 10 source "subsample_0" 40 peeps
+10BlockLayer "hidden_1_0_block" 2D (++) size 80 source "hidden_1_0" block 2 4
+10BlockLayer "hidden_1_1_block" 2D (++) size 80 source "hidden_1_1" block 2 4
+10BlockLayer "hidden_1_2_block" 2D (++) size 80 source "hidden_1_2" block 2 4
+10BlockLayer "hidden_1_3_block" 2D (++) size 80 source "hidden_1_3" block 2 4
+11NeuronLayerI4TanhE "subsample_1" 2D (++) size 20 source "hidden_1_0_block"
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_2_0" 2D (--) inputSize 250 outputSize 50 source "subsample_1" 200 peeps
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_2_1" 2D (-+) inputSize 250 outputSize 50 source "subsample_1" 200 peeps
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_2_2" 2D (+-) inputSize 250 outputSize 50 source "subsample_1" 200 peeps
+(R) 9LstmLayerI4TanhS0_8LogisticE "hidden_2_3" 2D (++) inputSize 250 outputSize 50 source "subsample_1" 200 peeps
+13CollapseLayer "output_collapse" 1D (+) size 121 source "hidden_2_3"
+18TranscriptionLayer "output" 1D (+) size 121 source "output_collapse"
+------------------------------
+62 connections:
+"bias_to_output" (121 wts)
+"output_collapse_to_output" (copy)
+"hidden_2_0_to_output_collapse" (6050 wts)
+"hidden_2_1_to_output_collapse" (6050 wts)
+"hidden_2_2_to_output_collapse" (6050 wts)
+"hidden_2_3_to_output_collapse" (6050 wts)
+"hidden_0_0_block_to_subsample_0" (144 wts)
+"hidden_0_1_block_to_subsample_0" (144 wts)
+"hidden_0_2_block_to_subsample_0" (144 wts)
+"hidden_0_3_block_to_subsample_0" (144 wts)
+"hidden_1_0_block_to_subsample_1" (1600 wts)
+"hidden_1_1_block_to_subsample_1" (1600 wts)
+"hidden_1_2_block_to_subsample_1" (1600 wts)
+"hidden_1_3_block_to_subsample_1" (1600 wts)
+"bias_to_hidden_2_0" (250 wts)
+"hidden_2_0_to_hidden_2_0_delay_1_0" (12500 wts)
+"hidden_2_0_to_hidden_2_0_delay_0_1" (12500 wts)
+"subsample_1_to_hidden_2_0" (5000 wts)
+"bias_to_hidden_1_3" (50 wts)
+"hidden_1_3_to_hidden_1_3_delay_-1_0" (500 wts)
+"hidden_1_3_to_hidden_1_3_delay_0_-1" (500 wts)
+"subsample_0_to_hidden_1_3" (300 wts)
+"bias_to_hidden_1_0" (50 wts)
+"hidden_1_0_to_hidden_1_0_delay_1_0" (500 wts)
+"hidden_1_0_to_hidden_1_0_delay_0_1" (500 wts)
+"subsample_0_to_hidden_1_0" (300 wts)
+"bias_to_hidden_1_2" (50 wts)
+"hidden_1_2_to_hidden_1_2_delay_-1_0" (500 wts)
+"hidden_1_2_to_hidden_1_2_delay_0_1" (500 wts)
+"subsample_0_to_hidden_1_2" (300 wts)
+"bias_to_hidden_2_1" (250 wts)
+"hidden_2_1_to_hidden_2_1_delay_1_0" (12500 wts)
+"hidden_2_1_to_hidden_2_1_delay_0_-1" (12500 wts)
+"subsample_1_to_hidden_2_1" (5000 wts)
+"bias_to_hidden_2_2" (250 wts)
+"hidden_2_2_to_hidden_2_2_delay_-1_0" (12500 wts)
+"hidden_2_2_to_hidden_2_2_delay_0_1" (12500 wts)
+"subsample_1_to_hidden_2_2" (5000 wts)
+"bias_to_hidden_2_3" (250 wts)
+"hidden_2_3_to_hidden_2_3_delay_-1_0" (12500 wts)
+"hidden_2_3_to_hidden_2_3_delay_0_-1" (12500 wts)
+"subsample_1_to_hidden_2_3" (5000 wts)
+"bias_to_hidden_1_1" (50 wts)
+"hidden_1_1_to_hidden_1_1_delay_1_0" (500 wts)
+"hidden_1_1_to_hidden_1_1_delay_0_-1" (500 wts)
+"subsample_0_to_hidden_1_1" (300 wts)
+"bias_to_hidden_0_0" (10 wts)
+"hidden_0_0_to_hidden_0_0_delay_1_0" (20 wts)
+"hidden_0_0_to_hidden_0_0_delay_0_1" (20 wts)
+"input_block_to_hidden_0_0" (120 wts)
+"bias_to_hidden_0_1" (10 wts)
+"hidden_0_1_to_hidden_0_1_delay_1_0" (20 wts)
+"hidden_0_1_to_hidden_0_1_delay_0_-1" (20 wts)
+"input_block_to_hidden_0_1" (120 wts)
+"bias_to_hidden_0_3" (10 wts)
+"hidden_0_3_to_hidden_0_3_delay_-1_0" (20 wts)
+"hidden_0_3_to_hidden_0_3_delay_0_-1" (20 wts)
+"input_block_to_hidden_0_3" (120 wts)
+"bias_to_hidden_0_2" (10 wts)
+"hidden_0_2_to_hidden_0_2_delay_-1_0" (20 wts)
+"hidden_0_2_to_hidden_0_2_delay_0_1" (20 wts)
+"input_block_to_hidden_0_2" (120 wts)
+------------------------------
+bidirectional = true true
+symmetry = false false
+inputBlock = 3 4
+159369 weights
+
+setting random seed to 2397408272
+
+loading dynamic data from transcription@2018.01.16-13.11.10.157513.last.save
+epoch = 454
+
+trainer:
+epoch = 454
+savename = transcription@2018.01.17-14.21.07.336130
+batchLearn = false
+seqsPerWeightUpdate = 1
+maxTestsNoBest = 20
+
+training data:
+numSequences = 20
+numTimesteps = 756020
+avg timesteps/seq = 37801
+1 filenames
+arabic_offline.nc
+inputSize = 1
+outputSize = 120
+numDims = 2
+task = transcription
+shuffled = true
+120 target labels
+0 aaElaB (0 = 0%)
+1 0A (0 = 0%)
+2 aaElaM (1 = 0.632911%)
+3 1A (0 = 0%)
+4 baA (0 = 0%)
+5 2A (0 = 0%)
+6 baB (6 = 3.79747%)
+7 6A (0 = 0%)
+8 baE (0 = 0%)
+9 7A (0 = 0%)
+10 baM (3 = 1.89873%)
+11 8A (0 = 0%)
+12 teA (4 = 2.53165%)
+13 9A (0 = 0%)
+14 taA (0 = 0%)
+15 hhA (1 = 0.632911%)
+16 taB (1 = 0.632911%)
+17 amA (0 = 0%)
+18 teE (8 = 5.06329%)
+19 aeA (1 = 0.632911%)
+20 taE (0 = 0%)
+21 ahA (0 = 0%)
+22 taM (0 = 0%)
+23 aeElaB (0 = 0%)
+24 thA (0 = 0%)
+25 ahElaB (0 = 0%)
+26 thB (0 = 0%)
+27 alM (1 = 0.632911%)
+28 thM (0 = 0%)
+29 aaA (17 = 10.7595%)
+30 jaA (0 = 0%)
+31 aaE (6 = 3.79747%)
+32 jaB (0 = 0%)
+33 jaE (1 = 0.632911%)
+34 zaM (1 = 0.632911%)
+35 jaM (3 = 1.89873%)
+36 ayA (0 = 0%)
+37 jaMlaB (0 = 0%)
+38 ayB (1 = 0.632911%)
+39 haA (1 = 0.632911%)
+40 ayE (0 = 0%)
+41 haB (1 = 0.632911%)
+42 ayM (0 = 0%)
+43 haE (0 = 0%)
+44 ghB (0 = 0%)
+45 haM (1 = 0.632911%)
+46 ghM (0 = 0%)
+47 haMlaB (1 = 0.632911%)
+48 faA (1 = 0.632911%)
+49 haMmaMlaB (0 = 0%)
+50 faB (0 = 0%)
+51 haMnaB (0 = 0%)
+52 faE (1 = 0.632911%)
+53 khA (0 = 0%)
+54 faM (2 = 1.26582%)
+55 khB (0 = 0%)
+56 kaA (1 = 0.632911%)
+57 khE (0 = 0%)
+58 kaB (3 = 1.89873%)
+59 khM (1 = 0.632911%)
+60 kaE (0 = 0%)
+61 khMlaB (1 = 0.632911%)
+62 kaM (1 = 0.632911%)
+63 daA (1 = 0.632911%)
+64 keB (0 = 0%)
+65 daE (3 = 1.89873%)
+66 keE (0 = 0%)
+67 dhA (0 = 0%)
+68 keM (0 = 0%)
+69 dhE (0 = 0%)
+70 laA (2 = 1.26582%)
+71 raA (4 = 2.53165%)
+72 laB (13 = 8.22785%)
+73 raE (8 = 5.06329%)
+74 laE (0 = 0%)
+75 zaA (1 = 0.632911%)
+76 laM (3 = 1.89873%)
+77 zaE (3 = 1.89873%)
+78 maA (0 = 0%)
+79 seA (0 = 0%)
+80 maB (4 = 2.53165%)
+81 seB (3 = 1.89873%)
+82 maE (1 = 0.632911%)
+83 seE (1 = 0.632911%)
+84 maM (4 = 2.53165%)
+85 seM (0 = 0%)
+86 maMlaB (0 = 0%)
+87 shA (0 = 0%)
+88 naA (1 = 0.632911%)
+89 shB (1 = 0.632911%)
+90 naB (1 = 0.632911%)
+91 shE (0 = 0%)
+92 naE (0 = 0%)
+93 shM (0 = 0%)
+94 naM (4 = 2.53165%)
+95 saA (0 = 0%)
+96 heA (0 = 0%)
+97 saB (2 = 1.26582%)
+98 heB (1 = 0.632911%)
+99 saE (1 = 0.632911%)
+100 heE (0 = 0%)
+101 saM (1 = 0.632911%)
+102 heM (0 = 0%)
+103 deA (0 = 0%)
+104 waA (1 = 0.632911%)
+105 deB (0 = 0%)
+106 waE (10 = 6.32911%)
+107 deE (1 = 0.632911%)
+108 eeA (0 = 0%)
+109 deM (0 = 0%)
+110 yaA (1 = 0.632911%)
+111 toA (0 = 0%)
+112 yaB (5 = 3.16456%)
+113 toB (1 = 0.632911%)
+114 eeE (0 = 0%)
+115 toE (0 = 0%)
+116 yaE (0 = 0%)
+117 toM (1 = 0.632911%)
+118 yaM (5 = 3.16456%)
+119 zaB (0 = 0%)
+totalTargetStringLength = 158
+
+------------------------------
+steepest descent
+learnRate = 0.0001
+momentum = 0.9
+------------------------------
+
+autosave filename transcription@2018.01.17-14.21.07.336130.last.save
+best save filename root transcription@2018.01.17-14.21.07.336130.best
+
+training...
+
+epoch 454 took 0.78209 seconds (0.0391045 secs/seq, 966666 its/sec, 708.66 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.8938
+deletions 50%
+insertions 0%
+labelError 62.0253%
+seqError 100%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 455 took 0.767194 seconds (0.0383597 secs/seq, 985435 its/sec, 722.42 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.698
+deletions 49.3671%
+insertions 0%
+labelError 61.3924%
+seqError 100%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 456 took 0.771371 seconds (0.0385686 secs/seq, 980099 its/sec, 718.508 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.5695
+deletions 52.5316%
+insertions 0%
+labelError 62.0253%
+seqError 95%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 457 took 0.76621 seconds (0.0383105 secs/seq, 986701 its/sec, 723.348 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.3957
+deletions 47.4684%
+insertions 0%
+labelError 58.2278%
+seqError 95%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 458 took 0.768516 seconds (0.0384258 secs/seq, 983740 its/sec, 721.177 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.5353
+deletions 48.7342%
+insertions 0%
+labelError 58.8608%
+seqError 95%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 459 took 0.766223 seconds (0.0383112 secs/seq, 986684 its/sec, 723.335 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.5355
+deletions 50%
+insertions 0%
+labelError 63.2911%
+seqError 95%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 460 took 0.768598 seconds (0.0384299 secs/seq, 983635 its/sec, 721.1 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.589
+deletions 46.8354%
+insertions 0%
+labelError 58.2278%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 461 took 0.766606 seconds (0.0383303 secs/seq, 986191 its/sec, 722.974 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.6115
+deletions 50.6329%
+insertions 0%
+labelError 61.3924%
+seqError 95%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 462 took 0.767059 seconds (0.038353 secs/seq, 985609 its/sec, 722.547 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.3458
+deletions 46.8354%
+insertions 0%
+labelError 60.1266%
+seqError 95%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 463 took 0.767869 seconds (0.0383935 secs/seq, 984569 its/sec, 721.785 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.5624
+deletions 48.7342%
+insertions 0%
+labelError 62.6582%
+seqError 100%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 464 took 0.765199 seconds (0.03826 secs/seq, 988004 its/sec, 724.303 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.6857
+deletions 47.4684%
+insertions 0%
+labelError 60.1266%
+seqError 95%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 465 took 0.765716 seconds (0.0382858 secs/seq, 987337 its/sec, 723.814 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.4776
+deletions 48.1013%
+insertions 0%
+labelError 60.7595%
+seqError 100%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 466 took 0.769875 seconds (0.0384938 secs/seq, 982004 its/sec, 719.904 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.4688
+deletions 46.8354%
+insertions 0%
+labelError 56.962%
+seqError 95%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 467 took 0.770878 seconds (0.0385439 secs/seq, 980726 its/sec, 718.967 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.0917
+deletions 46.2025%
+insertions 0%
+labelError 56.962%
+seqError 95%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 468 took 0.767595 seconds (0.0383798 secs/seq, 984920 its/sec, 722.042 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.2135
+deletions 46.8354%
+insertions 0%
+labelError 59.4937%
+seqError 95%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 469 took 0.765214 seconds (0.0382607 secs/seq, 987985 its/sec, 724.289 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.095
+deletions 47.4684%
+insertions 0%
+labelError 57.5949%
+seqError 95%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 470 took 0.770488 seconds (0.0385244 secs/seq, 981222 its/sec, 719.331 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.1347
+deletions 44.9367%
+insertions 0%
+labelError 59.4937%
+seqError 95%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 471 took 0.76998 seconds (0.038499 secs/seq, 981870 its/sec, 719.806 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.1351
+deletions 50%
+insertions 0%
+labelError 62.0253%
+seqError 100%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 472 took 0.768803 seconds (0.0384401 secs/seq, 983373 its/sec, 720.908 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.1116
+deletions 44.3038%
+insertions 0%
+labelError 60.1266%
+seqError 100%
+substitutions 15.8228%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 473 took 0.766238 seconds (0.0383119 secs/seq, 986665 its/sec, 723.321 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.1187
+deletions 48.1013%
+insertions 0%
+labelError 56.962%
+seqError 95%
+substitutions 8.86076%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 474 took 0.769708 seconds (0.0384854 secs/seq, 982217 its/sec, 720.06 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.0407
+deletions 46.2025%
+insertions 0%
+labelError 58.2278%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 475 took 0.770199 seconds (0.03851 secs/seq, 981590 its/sec, 719.601 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13
+deletions 48.7342%
+insertions 0%
+labelError 58.2278%
+seqError 100%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 476 took 0.767891 seconds (0.0383945 secs/seq, 984541 its/sec, 721.764 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.3528
+deletions 49.3671%
+insertions 0%
+labelError 61.3924%
+seqError 100%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 477 took 0.769386 seconds (0.0384693 secs/seq, 982628 its/sec, 720.362 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 14.2174
+deletions 42.4051%
+insertions 0%
+labelError 62.6582%
+seqError 100%
+substitutions 20.2532%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 478 took 0.807555 seconds (0.0403778 secs/seq, 936184 its/sec, 686.314 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.3137
+deletions 48.1013%
+insertions 0%
+labelError 59.4937%
+seqError 100%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 479 took 0.817432 seconds (0.0408716 secs/seq, 924872 its/sec, 678.021 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.1147
+deletions 44.9367%
+insertions 0%
+labelError 57.5949%
+seqError 95%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 480 took 0.81776 seconds (0.040888 secs/seq, 924501 its/sec, 677.749 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.8926
+deletions 46.8354%
+insertions 0%
+labelError 56.962%
+seqError 95%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 481 took 0.817432 seconds (0.0408716 secs/seq, 924872 its/sec, 678.021 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.7295
+deletions 46.2025%
+insertions 0%
+labelError 55.6962%
+seqError 95%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 482 took 0.815929 seconds (0.0407964 secs/seq, 926576 its/sec, 679.27 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.6369
+deletions 44.3038%
+insertions 0%
+labelError 55.6962%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 483 took 0.827219 seconds (0.041361 secs/seq, 913930 its/sec, 669.999 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.7439
+deletions 46.8354%
+insertions 0%
+labelError 58.2278%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 484 took 0.845379 seconds (0.0422689 secs/seq, 894297 its/sec, 655.607 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.4805
+deletions 44.9367%
+insertions 0%
+labelError 56.3291%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 485 took 0.790077 seconds (0.0395039 secs/seq, 956894 its/sec, 701.496 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.6328
+deletions 42.4051%
+insertions 0%
+labelError 56.3291%
+seqError 100%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 486 took 0.770538 seconds (0.0385269 secs/seq, 981159 its/sec, 719.285 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.6058
+deletions 44.3038%
+insertions 0%
+labelError 58.2278%
+seqError 95%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 487 took 0.769497 seconds (0.0384748 secs/seq, 982486 its/sec, 720.258 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.4065
+deletions 45.5696%
+insertions 0%
+labelError 58.8608%
+seqError 95%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 488 took 0.769925 seconds (0.0384962 secs/seq, 981940 its/sec, 719.857 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.4315
+deletions 46.2025%
+insertions 0%
+labelError 57.5949%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 489 took 0.771401 seconds (0.0385701 secs/seq, 980061 its/sec, 718.48 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.5461
+deletions 44.3038%
+insertions 0%
+labelError 55.0633%
+seqError 95%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 490 took 0.770287 seconds (0.0385144 secs/seq, 981478 its/sec, 719.519 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 13.0709
+deletions 44.9367%
+insertions 0%
+labelError 61.3924%
+seqError 100%
+substitutions 16.4557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 491 took 0.768509 seconds (0.0384254 secs/seq, 983749 its/sec, 721.184 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.8229
+deletions 42.4051%
+insertions 0%
+labelError 57.5949%
+seqError 100%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 492 took 0.76865 seconds (0.0384325 secs/seq, 983569 its/sec, 721.051 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.3979
+deletions 45.5696%
+insertions 0%
+labelError 56.962%
+seqError 100%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 493 took 0.768421 seconds (0.038421 secs/seq, 983862 its/sec, 721.266 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.8695
+deletions 41.7722%
+insertions 0%
+labelError 57.5949%
+seqError 95%
+substitutions 15.8228%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 494 took 0.77548 seconds (0.038774 secs/seq, 974906 its/sec, 714.701 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.1697
+deletions 44.9367%
+insertions 0%
+labelError 56.3291%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 495 took 0.765591 seconds (0.0382796 secs/seq, 987499 its/sec, 723.932 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.6954
+deletions 39.8734%
+insertions 0%
+labelError 58.2278%
+seqError 100%
+substitutions 18.3544%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 496 took 0.770876 seconds (0.0385438 secs/seq, 980728 its/sec, 718.969 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.5246
+deletions 43.038%
+insertions 0%
+labelError 56.3291%
+seqError 100%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 497 took 0.768192 seconds (0.0384096 secs/seq, 984155 its/sec, 721.481 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.075
+deletions 41.1392%
+insertions 0%
+labelError 53.1646%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 498 took 0.769945 seconds (0.0384972 secs/seq, 981914 its/sec, 719.839 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.4076
+deletions 39.8734%
+insertions 0%
+labelError 53.7975%
+seqError 95%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 499 took 0.772286 seconds (0.0386143 secs/seq, 978938 its/sec, 717.657 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.2737
+deletions 43.6709%
+insertions 0%
+labelError 55.6962%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 500 took 0.770722 seconds (0.0385361 secs/seq, 980924 its/sec, 719.113 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.1367
+deletions 45.5696%
+insertions 0%
+labelError 58.2278%
+seqError 95%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 501 took 0.772635 seconds (0.0386317 secs/seq, 978496 its/sec, 717.332 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.2008
+deletions 41.1392%
+insertions 0%
+labelError 57.5949%
+seqError 95%
+substitutions 16.4557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 502 took 0.768745 seconds (0.0384372 secs/seq, 983447 its/sec, 720.962 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.0124
+deletions 42.4051%
+insertions 0%
+labelError 56.962%
+seqError 95%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 503 took 0.770053 seconds (0.0385026 secs/seq, 981777 its/sec, 719.738 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.8098
+deletions 42.4051%
+insertions 0%
+labelError 54.4304%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 504 took 0.772382 seconds (0.0386191 secs/seq, 978816 its/sec, 717.567 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.8157
+deletions 42.4051%
+insertions 0%
+labelError 54.4304%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 505 took 0.769424 seconds (0.0384712 secs/seq, 982579 its/sec, 720.326 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.8812
+deletions 38.6076%
+insertions 0%
+labelError 52.5316%
+seqError 95%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 506 took 0.772076 seconds (0.0386038 secs/seq, 979204 its/sec, 717.852 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.5166
+deletions 43.038%
+insertions 0%
+labelError 56.962%
+seqError 95%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 507 took 0.767982 seconds (0.0383991 secs/seq, 984424 its/sec, 721.679 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.0847
+deletions 43.038%
+insertions 0%
+labelError 55.0633%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 508 took 0.76834 seconds (0.038417 secs/seq, 983965 its/sec, 721.342 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.1004
+deletions 37.3418%
+insertions 0%
+labelError 51.2658%
+seqError 85%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 509 took 0.77671 seconds (0.0388355 secs/seq, 973362 its/sec, 713.569 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.535
+deletions 46.8354%
+insertions 0%
+labelError 61.3924%
+seqError 100%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 510 took 0.795155 seconds (0.0397577 secs/seq, 950783 its/sec, 697.016 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.3227
+deletions 39.8734%
+insertions 0%
+labelError 55.0633%
+seqError 100%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 511 took 0.797329 seconds (0.0398664 secs/seq, 948191 its/sec, 695.116 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.2285
+deletions 42.4051%
+insertions 0%
+labelError 58.8608%
+seqError 95%
+substitutions 16.4557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 512 took 0.797112 seconds (0.0398556 secs/seq, 948449 its/sec, 695.305 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.6221
+deletions 42.4051%
+insertions 0%
+labelError 57.5949%
+seqError 100%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 513 took 0.793188 seconds (0.0396594 secs/seq, 953141 its/sec, 698.745 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 12.3787
+deletions 37.9747%
+insertions 0%
+labelError 55.6962%
+seqError 95%
+substitutions 17.7215%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 514 took 0.813379 seconds (0.0406689 secs/seq, 929481 its/sec, 681.4 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.5963
+deletions 41.7722%
+insertions 0%
+labelError 53.7975%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 515 took 0.835996 seconds (0.0417998 secs/seq, 904334 its/sec, 662.965 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.5788
+deletions 41.7722%
+insertions 0%
+labelError 53.7975%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 516 took 0.767568 seconds (0.0383784 secs/seq, 984955 its/sec, 722.068 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.6662
+deletions 39.2405%
+insertions 0%
+labelError 54.4304%
+seqError 95%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 517 took 0.76824 seconds (0.038412 secs/seq, 984094 its/sec, 721.436 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.3655
+deletions 41.1392%
+insertions 0%
+labelError 54.4304%
+seqError 95%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 518 took 0.770601 seconds (0.03853 secs/seq, 981078 its/sec, 719.226 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.2402
+deletions 38.6076%
+insertions 0%
+labelError 52.5316%
+seqError 95%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 519 took 0.769277 seconds (0.0384639 secs/seq, 982767 its/sec, 720.464 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.0787
+deletions 35.443%
+insertions 0%
+labelError 46.8354%
+seqError 90%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 520 took 0.770515 seconds (0.0385257 secs/seq, 981188 its/sec, 719.306 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.3072
+deletions 36.0759%
+insertions 0%
+labelError 50%
+seqError 95%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 521 took 0.770571 seconds (0.0385286 secs/seq, 981117 its/sec, 719.254 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.315
+deletions 43.038%
+insertions 0%
+labelError 53.1646%
+seqError 95%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 522 took 0.771617 seconds (0.0385808 secs/seq, 979787 its/sec, 718.279 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.2285
+deletions 34.8101%
+insertions 0%
+labelError 49.3671%
+seqError 95%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 523 took 0.769087 seconds (0.0384543 secs/seq, 983010 its/sec, 720.642 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.3182
+deletions 40.5063%
+insertions 0%
+labelError 52.5316%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 524 took 0.770955 seconds (0.0385477 secs/seq, 980628 its/sec, 718.896 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.1531
+deletions 38.6076%
+insertions 0%
+labelError 51.2658%
+seqError 95%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 525 took 0.770897 seconds (0.0385449 secs/seq, 980702 its/sec, 718.95 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.325
+deletions 34.8101%
+insertions 0%
+labelError 53.7975%
+seqError 95%
+substitutions 18.9873%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 526 took 0.768814 seconds (0.0384407 secs/seq, 983359 its/sec, 720.898 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.3187
+deletions 40.5063%
+insertions 0%
+labelError 51.2658%
+seqError 95%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 527 took 0.771132 seconds (0.0385566 secs/seq, 980403 its/sec, 718.731 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.1399
+deletions 34.1772%
+insertions 0%
+labelError 49.3671%
+seqError 95%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 528 took 0.769922 seconds (0.0384961 secs/seq, 981944 its/sec, 719.86 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.1363
+deletions 34.1772%
+insertions 0%
+labelError 50%
+seqError 90%
+substitutions 15.8228%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 529 took 0.768677 seconds (0.0384339 secs/seq, 983534 its/sec, 721.026 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.075
+deletions 38.6076%
+insertions 0%
+labelError 51.8987%
+seqError 95%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 530 took 0.767987 seconds (0.0383993 secs/seq, 984418 its/sec, 721.674 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.9541
+deletions 38.6076%
+insertions 0%
+labelError 51.8987%
+seqError 90%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 531 took 0.76752 seconds (0.038376 secs/seq, 985017 its/sec, 722.113 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.0622
+deletions 37.9747%
+insertions 0%
+labelError 51.2658%
+seqError 95%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 532 took 0.76874 seconds (0.038437 secs/seq, 983453 its/sec, 720.967 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.702
+deletions 38.6076%
+insertions 0%
+labelError 50%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 533 took 0.768408 seconds (0.0384204 secs/seq, 983878 its/sec, 721.278 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.9303
+deletions 41.7722%
+insertions 0%
+labelError 49.3671%
+seqError 95%
+substitutions 7.59494%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 534 took 0.768652 seconds (0.0384326 secs/seq, 983566 its/sec, 721.049 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.1097
+deletions 38.6076%
+insertions 0%
+labelError 54.4304%
+seqError 100%
+substitutions 15.8228%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 535 took 0.770584 seconds (0.0385292 secs/seq, 981100 its/sec, 719.242 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.0076
+deletions 34.1772%
+insertions 0%
+labelError 49.3671%
+seqError 90%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 536 took 0.772975 seconds (0.0386487 secs/seq, 978065 its/sec, 717.017 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.8661
+deletions 34.1772%
+insertions 0%
+labelError 48.1013%
+seqError 90%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 537 took 0.770883 seconds (0.0385441 secs/seq, 980720 its/sec, 718.963 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.0287
+deletions 36.0759%
+insertions 0%
+labelError 50.6329%
+seqError 95%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 538 took 0.769463 seconds (0.0384731 secs/seq, 982529 its/sec, 720.29 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.0659
+deletions 41.1392%
+insertions 0%
+labelError 54.4304%
+seqError 90%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 539 took 0.770382 seconds (0.0385191 secs/seq, 981357 its/sec, 719.43 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.8512
+deletions 34.1772%
+insertions 0%
+labelError 50%
+seqError 95%
+substitutions 15.8228%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 540 took 0.769554 seconds (0.0384777 secs/seq, 982413 its/sec, 720.204 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.7782
+deletions 36.0759%
+insertions 0%
+labelError 50%
+seqError 95%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 541 took 0.769522 seconds (0.0384761 secs/seq, 982454 its/sec, 720.234 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.1736
+deletions 39.8734%
+insertions 0%
+labelError 51.2658%
+seqError 90%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 542 took 0.764862 seconds (0.0382431 secs/seq, 988440 its/sec, 724.622 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.5666
+deletions 34.1772%
+insertions 0%
+labelError 47.4684%
+seqError 90%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 543 took 0.766728 seconds (0.0383364 secs/seq, 986034 its/sec, 722.859 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.0747
+deletions 32.2785%
+insertions 0%
+labelError 47.4684%
+seqError 95%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 544 took 0.769689 seconds (0.0384844 secs/seq, 982241 its/sec, 720.078 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.7382
+deletions 34.1772%
+insertions 0%
+labelError 46.2025%
+seqError 90%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 545 took 0.767 seconds (0.03835 secs/seq, 985684 its/sec, 722.603 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.8056
+deletions 32.9114%
+insertions 0%
+labelError 47.4684%
+seqError 90%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 546 took 0.769301 seconds (0.0384651 secs/seq, 982736 its/sec, 720.441 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.7742
+deletions 29.7468%
+insertions 0%
+labelError 46.2025%
+seqError 90%
+substitutions 16.4557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 547 took 0.770913 seconds (0.0385457 secs/seq, 980681 its/sec, 718.935 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.929
+deletions 36.7089%
+insertions 0%
+labelError 48.7342%
+seqError 90%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 548 took 0.767294 seconds (0.0383647 secs/seq, 985307 its/sec, 722.326 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.8806
+deletions 29.7468%
+insertions 0%
+labelError 50%
+seqError 90%
+substitutions 20.2532%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 549 took 0.76771 seconds (0.0383855 secs/seq, 984773 its/sec, 721.934 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.9746
+deletions 34.8101%
+insertions 0%
+labelError 49.3671%
+seqError 100%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 550 took 0.768997 seconds (0.0384499 secs/seq, 983125 its/sec, 720.726 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.7748
+deletions 35.443%
+insertions 0%
+labelError 53.1646%
+seqError 100%
+substitutions 17.7215%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 551 took 0.768441 seconds (0.038422 secs/seq, 983836 its/sec, 721.247 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.5361
+deletions 32.9114%
+insertions 0%
+labelError 45.5696%
+seqError 95%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 552 took 0.769752 seconds (0.0384876 secs/seq, 982160 its/sec, 720.019 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.4493
+deletions 37.3418%
+insertions 0%
+labelError 48.7342%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 553 took 0.768899 seconds (0.0384449 secs/seq, 983250 its/sec, 720.818 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.2133
+deletions 34.8101%
+insertions 0%
+labelError 47.4684%
+seqError 95%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 554 took 0.770754 seconds (0.0385377 secs/seq, 980884 its/sec, 719.083 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.3293
+deletions 29.7468%
+insertions 0%
+labelError 42.4051%
+seqError 85%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 555 took 0.770433 seconds (0.0385217 secs/seq, 981292 its/sec, 719.383 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.0964
+deletions 32.9114%
+insertions 0%
+labelError 44.9367%
+seqError 95%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 556 took 0.77072 seconds (0.038536 secs/seq, 980927 its/sec, 719.115 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.0059
+deletions 31.0127%
+insertions 0%
+labelError 43.6709%
+seqError 95%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 557 took 0.774473 seconds (0.0387236 secs/seq, 976173 its/sec, 715.63 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.7264
+deletions 31.0127%
+insertions 0%
+labelError 44.3038%
+seqError 95%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 558 took 0.770407 seconds (0.0385203 secs/seq, 981325 its/sec, 719.407 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.89
+deletions 36.7089%
+insertions 0%
+labelError 50%
+seqError 100%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 559 took 0.771852 seconds (0.0385926 secs/seq, 979488 its/sec, 718.06 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.8076
+deletions 36.7089%
+insertions 0%
+labelError 51.2658%
+seqError 95%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 560 took 0.776426 seconds (0.0388213 secs/seq, 973718 its/sec, 713.83 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 11.3409
+deletions 36.0759%
+insertions 0%
+labelError 52.5316%
+seqError 90%
+substitutions 16.4557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 561 took 0.76783 seconds (0.0383915 secs/seq, 984619 its/sec, 721.821 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.9507
+deletions 33.5443%
+insertions 0%
+labelError 48.7342%
+seqError 100%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 562 took 0.768047 seconds (0.0384024 secs/seq, 984341 its/sec, 721.617 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.6389
+deletions 34.1772%
+insertions 0%
+labelError 48.1013%
+seqError 100%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 563 took 0.766566 seconds (0.0383283 secs/seq, 986243 its/sec, 723.012 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.4862
+deletions 32.9114%
+insertions 0%
+labelError 45.5696%
+seqError 95%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 564 took 0.768917 seconds (0.0384458 secs/seq, 983227 its/sec, 720.801 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.4364
+deletions 34.1772%
+insertions 0%
+labelError 44.9367%
+seqError 95%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 565 took 0.766728 seconds (0.0383364 secs/seq, 986034 its/sec, 722.859 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.2878
+deletions 34.1772%
+insertions 0%
+labelError 46.2025%
+seqError 90%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 566 took 0.770979 seconds (0.0385489 secs/seq, 980597 its/sec, 718.873 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.5682
+deletions 30.3797%
+insertions 0%
+labelError 45.5696%
+seqError 90%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 567 took 0.766515 seconds (0.0383257 secs/seq, 986308 its/sec, 723.06 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.2985
+deletions 31.0127%
+insertions 0%
+labelError 43.6709%
+seqError 90%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 568 took 0.767503 seconds (0.0383752 secs/seq, 985038 its/sec, 722.129 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.3995
+deletions 31.6456%
+insertions 0%
+labelError 44.9367%
+seqError 90%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 569 took 0.76839 seconds (0.0384195 secs/seq, 983901 its/sec, 721.295 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.2927
+deletions 30.3797%
+insertions 0%
+labelError 46.2025%
+seqError 90%
+substitutions 15.8228%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 570 took 0.765563 seconds (0.0382781 secs/seq, 987535 its/sec, 723.959 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.0204
+deletions 31.0127%
+insertions 0%
+labelError 45.5696%
+seqError 90%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 571 took 0.766784 seconds (0.0383392 secs/seq, 985962 its/sec, 722.806 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.0337
+deletions 29.7468%
+insertions 0%
+labelError 42.4051%
+seqError 85%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 572 took 0.768916 seconds (0.0384458 secs/seq, 983228 its/sec, 720.802 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.368
+deletions 31.0127%
+insertions 0%
+labelError 44.9367%
+seqError 90%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 573 took 0.765944 seconds (0.0382972 secs/seq, 987043 its/sec, 723.599 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.80616
+deletions 32.2785%
+insertions 0%
+labelError 45.5696%
+seqError 90%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 574 took 0.766254 seconds (0.0383127 secs/seq, 986644 its/sec, 723.306 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.97737
+deletions 29.7468%
+insertions 0%
+labelError 43.038%
+seqError 95%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 575 took 0.77249 seconds (0.0386245 secs/seq, 978679 its/sec, 717.467 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.6852
+deletions 32.2785%
+insertions 0%
+labelError 47.4684%
+seqError 100%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 576 took 0.768025 seconds (0.0384012 secs/seq, 984369 its/sec, 721.638 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.4995
+deletions 32.2785%
+insertions 0%
+labelError 44.3038%
+seqError 90%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 577 took 0.768678 seconds (0.0384339 secs/seq, 983533 its/sec, 721.025 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 10.468
+deletions 28.481%
+insertions 0%
+labelError 44.3038%
+seqError 90%
+substitutions 15.8228%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 578 took 0.766915 seconds (0.0383457 secs/seq, 985794 its/sec, 722.683 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.40817
+deletions 25.9494%
+insertions 0%
+labelError 38.6076%
+seqError 85%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 579 took 0.768041 seconds (0.0384021 secs/seq, 984348 its/sec, 721.623 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.4366
+deletions 29.1139%
+insertions 0%
+labelError 39.8734%
+seqError 90%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 580 took 0.771302 seconds (0.0385651 secs/seq, 980187 its/sec, 718.572 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.66408
+deletions 32.9114%
+insertions 0%
+labelError 44.3038%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 581 took 0.767777 seconds (0.0383889 secs/seq, 984687 its/sec, 721.871 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.64961
+deletions 34.8101%
+insertions 0.632911%
+labelError 46.8354%
+seqError 90%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 582 took 0.767785 seconds (0.0383892 secs/seq, 984677 its/sec, 721.864 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.26249
+deletions 29.7468%
+insertions 0%
+labelError 39.8734%
+seqError 90%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 583 took 0.771029 seconds (0.0385515 secs/seq, 980534 its/sec, 718.827 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.19867
+deletions 27.8481%
+insertions 0%
+labelError 39.2405%
+seqError 85%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 584 took 0.769871 seconds (0.0384936 secs/seq, 982009 its/sec, 719.908 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.10957
+deletions 24.6835%
+insertions 0%
+labelError 37.3418%
+seqError 85%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 585 took 0.767671 seconds (0.0383836 secs/seq, 984823 its/sec, 721.971 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.16886
+deletions 30.3797%
+insertions 0%
+labelError 39.8734%
+seqError 90%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 586 took 0.76778 seconds (0.038389 secs/seq, 984683 its/sec, 721.868 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.2926
+deletions 23.4177%
+insertions 0%
+labelError 39.8734%
+seqError 85%
+substitutions 16.4557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 587 took 0.766541 seconds (0.0383271 secs/seq, 986275 its/sec, 723.035 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.74401
+deletions 32.2785%
+insertions 0%
+labelError 43.038%
+seqError 90%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 588 took 0.768757 seconds (0.0384379 secs/seq, 983432 its/sec, 720.951 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.63205
+deletions 30.3797%
+insertions 0%
+labelError 42.4051%
+seqError 90%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 589 took 0.765424 seconds (0.0382712 secs/seq, 987714 its/sec, 724.09 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.55174
+deletions 26.5823%
+insertions 0%
+labelError 41.1392%
+seqError 95%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 590 took 0.767642 seconds (0.0383821 secs/seq, 984860 its/sec, 721.998 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.04207
+deletions 29.7468%
+insertions 0%
+labelError 39.8734%
+seqError 95%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 591 took 0.765195 seconds (0.0382597 secs/seq, 988010 its/sec, 724.307 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.27719
+deletions 29.1139%
+insertions 0%
+labelError 39.8734%
+seqError 95%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 592 took 0.764528 seconds (0.0382264 secs/seq, 988872 its/sec, 724.939 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.8714
+deletions 25.9494%
+insertions 0%
+labelError 36.0759%
+seqError 80%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 593 took 0.767882 seconds (0.0383941 secs/seq, 984552 its/sec, 721.773 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.85477
+deletions 28.481%
+insertions 0%
+labelError 37.3418%
+seqError 85%
+substitutions 8.86076%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 594 took 0.767276 seconds (0.0383638 secs/seq, 985330 its/sec, 722.343 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.83897
+deletions 27.8481%
+insertions 0%
+labelError 39.2405%
+seqError 85%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 595 took 0.766167 seconds (0.0383084 secs/seq, 986756 its/sec, 723.388 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.8309
+deletions 27.2152%
+insertions 0%
+labelError 41.7722%
+seqError 90%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 596 took 0.765703 seconds (0.0382852 secs/seq, 987354 its/sec, 723.827 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.13304
+deletions 27.2152%
+insertions 0%
+labelError 38.6076%
+seqError 85%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 597 took 0.772726 seconds (0.0386363 secs/seq, 978380 its/sec, 717.248 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.13024
+deletions 31.6456%
+insertions 0%
+labelError 41.1392%
+seqError 95%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 598 took 0.761961 seconds (0.0380981 secs/seq, 992203 its/sec, 727.381 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.34374
+deletions 25.9494%
+insertions 0.632911%
+labelError 40.5063%
+seqError 85%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 599 took 0.761464 seconds (0.0380732 secs/seq, 992851 its/sec, 727.856 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.15248
+deletions 25.9494%
+insertions 0%
+labelError 37.3418%
+seqError 90%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 600 took 0.761391 seconds (0.0380696 secs/seq, 992946 its/sec, 727.926 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.76926
+deletions 22.1519%
+insertions 0%
+labelError 36.7089%
+seqError 90%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 601 took 0.763631 seconds (0.0381815 secs/seq, 990033 its/sec, 725.791 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.84552
+deletions 29.7468%
+insertions 0%
+labelError 40.5063%
+seqError 95%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 602 took 0.762655 seconds (0.0381327 secs/seq, 991300 its/sec, 726.719 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.76183
+deletions 26.5823%
+insertions 0%
+labelError 39.8734%
+seqError 80%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 603 took 0.763062 seconds (0.0381531 secs/seq, 990771 its/sec, 726.332 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.2106
+deletions 27.8481%
+insertions 0%
+labelError 43.038%
+seqError 100%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 604 took 0.763476 seconds (0.0381738 secs/seq, 990234 its/sec, 725.938 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.70945
+deletions 27.8481%
+insertions 0%
+labelError 37.3418%
+seqError 85%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 605 took 0.762951 seconds (0.0381476 secs/seq, 990916 its/sec, 726.437 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.05971
+deletions 25.9494%
+insertions 0%
+labelError 39.8734%
+seqError 90%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 606 took 0.75977 seconds (0.0379885 secs/seq, 995064 its/sec, 729.479 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.90664
+deletions 24.0506%
+insertions 0%
+labelError 40.5063%
+seqError 90%
+substitutions 16.4557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 607 took 0.760161 seconds (0.0380081 secs/seq, 994552 its/sec, 729.104 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.99701
+deletions 27.8481%
+insertions 0%
+labelError 39.2405%
+seqError 90%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 608 took 0.762152 seconds (0.0381076 secs/seq, 991954 its/sec, 727.199 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.17868
+deletions 27.2152%
+insertions 0%
+labelError 41.1392%
+seqError 80%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 609 took 0.759094 seconds (0.0379547 secs/seq, 995950 its/sec, 730.128 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.87426
+deletions 32.2785%
+insertions 0%
+labelError 43.6709%
+seqError 95%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 610 took 0.757476 seconds (0.0378738 secs/seq, 998078 its/sec, 731.688 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.76201
+deletions 25.9494%
+insertions 0%
+labelError 37.9747%
+seqError 80%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 611 took 0.75933 seconds (0.0379665 secs/seq, 995641 its/sec, 729.902 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.52851
+deletions 28.481%
+insertions 0%
+labelError 37.3418%
+seqError 85%
+substitutions 8.86076%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 612 took 0.759858 seconds (0.0379929 secs/seq, 994949 its/sec, 729.394 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 9.44295
+deletions 23.4177%
+insertions 0%
+labelError 37.3418%
+seqError 85%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 613 took 0.757962 seconds (0.0378981 secs/seq, 997438 its/sec, 731.219 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.88273
+deletions 24.6835%
+insertions 0.632911%
+labelError 38.6076%
+seqError 85%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 614 took 0.76012 seconds (0.038006 secs/seq, 994606 its/sec, 729.143 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.25852
+deletions 25.9494%
+insertions 0%
+labelError 40.5063%
+seqError 80%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 615 took 0.763868 seconds (0.0381934 secs/seq, 989726 its/sec, 725.565 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.20053
+deletions 24.6835%
+insertions 0%
+labelError 34.8101%
+seqError 80%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 616 took 0.762213 seconds (0.0381107 secs/seq, 991875 its/sec, 727.141 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.66806
+deletions 26.5823%
+insertions 0%
+labelError 39.8734%
+seqError 80%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 617 took 0.76077 seconds (0.0380385 secs/seq, 993756 its/sec, 728.52 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.5323
+deletions 27.8481%
+insertions 0%
+labelError 37.9747%
+seqError 90%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 618 took 0.764916 seconds (0.0382458 secs/seq, 988370 its/sec, 724.571 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.96426
+deletions 27.2152%
+insertions 0%
+labelError 42.4051%
+seqError 85%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 619 took 0.761733 seconds (0.0380866 secs/seq, 992500 its/sec, 727.599 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.67702
+deletions 24.0506%
+insertions 0%
+labelError 37.9747%
+seqError 85%
+substitutions 13.9241%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 620 took 0.764369 seconds (0.0382185 secs/seq, 989077 its/sec, 725.09 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.22375
+deletions 28.481%
+insertions 0%
+labelError 38.6076%
+seqError 80%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 621 took 0.763478 seconds (0.0381739 secs/seq, 990232 its/sec, 725.936 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.16939
+deletions 23.4177%
+insertions 0%
+labelError 34.8101%
+seqError 80%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 622 took 0.764789 seconds (0.0382395 secs/seq, 988534 its/sec, 724.692 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.27748
+deletions 24.0506%
+insertions 0%
+labelError 35.443%
+seqError 80%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 623 took 0.765053 seconds (0.0382526 secs/seq, 988193 its/sec, 724.441 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.78834
+deletions 23.4177%
+insertions 0%
+labelError 34.1772%
+seqError 80%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 624 took 0.763123 seconds (0.0381561 secs/seq, 990692 its/sec, 726.274 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.70012
+deletions 21.519%
+insertions 0%
+labelError 33.5443%
+seqError 75%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 625 took 0.764425 seconds (0.0382212 secs/seq, 989005 its/sec, 725.037 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.26433
+deletions 25.9494%
+insertions 0%
+labelError 36.7089%
+seqError 85%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 626 took 0.762321 seconds (0.038116 secs/seq, 991734 its/sec, 727.038 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.10279
+deletions 26.5823%
+insertions 0%
+labelError 38.6076%
+seqError 80%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 627 took 0.761169 seconds (0.0380585 secs/seq, 993235 its/sec, 728.138 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.76421
+deletions 22.7848%
+insertions 0%
+labelError 32.9114%
+seqError 80%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 628 took 0.759392 seconds (0.0379696 secs/seq, 995560 its/sec, 729.842 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.83885
+deletions 24.6835%
+insertions 0%
+labelError 36.0759%
+seqError 80%
+substitutions 11.3924%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 629 took 0.763997 seconds (0.0381999 secs/seq, 989559 its/sec, 725.443 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.99899
+deletions 22.7848%
+insertions 0%
+labelError 37.3418%
+seqError 80%
+substitutions 14.557%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 630 took 0.759426 seconds (0.0379713 secs/seq, 995515 its/sec, 729.809 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.07058
+deletions 24.6835%
+insertions 0%
+labelError 34.8101%
+seqError 80%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 631 took 0.760936 seconds (0.0380468 secs/seq, 993540 its/sec, 728.361 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.76647
+deletions 26.5823%
+insertions 0%
+labelError 36.7089%
+seqError 90%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 632 took 0.759866 seconds (0.0379933 secs/seq, 994939 its/sec, 729.387 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.50962
+deletions 23.4177%
+insertions 0%
+labelError 34.1772%
+seqError 75%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 633 took 0.765366 seconds (0.0382683 secs/seq, 987789 its/sec, 724.145 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.72283
+deletions 28.481%
+insertions 0%
+labelError 41.7722%
+seqError 85%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 634 took 0.768645 seconds (0.0384323 secs/seq, 983575 its/sec, 721.056 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.80701
+deletions 22.7848%
+insertions 0%
+labelError 33.5443%
+seqError 75%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 635 took 0.766135 seconds (0.0383068 secs/seq, 986797 its/sec, 723.418 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.00799
+deletions 21.519%
+insertions 0%
+labelError 33.5443%
+seqError 75%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 636 took 0.767443 seconds (0.0383722 secs/seq, 985116 its/sec, 722.185 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.99685
+deletions 27.8481%
+insertions 0%
+labelError 37.3418%
+seqError 85%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 637 took 0.763401 seconds (0.03817 secs/seq, 990331 its/sec, 726.009 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.81548
+deletions 24.6835%
+insertions 0%
+labelError 35.443%
+seqError 75%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 638 took 0.766914 seconds (0.0383457 secs/seq, 985795 its/sec, 722.684 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.79875
+deletions 25.3165%
+insertions 0%
+labelError 36.0759%
+seqError 85%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 639 took 0.766535 seconds (0.0383267 secs/seq, 986282 its/sec, 723.041 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.65392
+deletions 29.1139%
+insertions 0%
+labelError 42.4051%
+seqError 90%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 640 took 0.767906 seconds (0.0383953 secs/seq, 984522 its/sec, 721.75 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 8.31064
+deletions 27.8481%
+insertions 0%
+labelError 41.1392%
+seqError 85%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 641 took 0.767203 seconds (0.0383601 secs/seq, 985424 its/sec, 722.411 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.4887
+deletions 20.8861%
+insertions 0.632911%
+labelError 31.6456%
+seqError 75%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 642 took 0.769644 seconds (0.0384822 secs/seq, 982298 its/sec, 720.12 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.33858
+deletions 20.8861%
+insertions 0.632911%
+labelError 32.2785%
+seqError 80%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 643 took 0.765668 seconds (0.0382834 secs/seq, 987399 its/sec, 723.86 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.47036
+deletions 23.4177%
+insertions 0%
+labelError 34.1772%
+seqError 80%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 644 took 0.766872 seconds (0.0383436 secs/seq, 985849 its/sec, 722.723 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.76582
+deletions 20.8861%
+insertions 0%
+labelError 36.0759%
+seqError 80%
+substitutions 15.1899%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 645 took 0.767187 seconds (0.0383594 secs/seq, 985444 its/sec, 722.426 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.4979
+deletions 24.0506%
+insertions 0%
+labelError 34.1772%
+seqError 75%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 646 took 0.766003 seconds (0.0383001 secs/seq, 986967 its/sec, 723.543 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.39935
+deletions 24.0506%
+insertions 0%
+labelError 36.0759%
+seqError 85%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 647 took 0.766162 seconds (0.0383081 secs/seq, 986763 its/sec, 723.393 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.60144
+deletions 22.7848%
+insertions 0%
+labelError 33.5443%
+seqError 80%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 648 took 0.764026 seconds (0.0382013 secs/seq, 989521 its/sec, 725.415 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.63867
+deletions 25.3165%
+insertions 0%
+labelError 37.3418%
+seqError 85%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 649 took 0.763689 seconds (0.0381844 secs/seq, 989958 its/sec, 725.735 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.28379
+deletions 23.4177%
+insertions 0%
+labelError 32.2785%
+seqError 80%
+substitutions 8.86076%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 650 took 0.764721 seconds (0.0382361 secs/seq, 988622 its/sec, 724.756 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.39315
+deletions 17.7215%
+insertions 0%
+labelError 29.7468%
+seqError 75%
+substitutions 12.0253%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 651 took 0.757657 seconds (0.0378829 secs/seq, 997839 its/sec, 731.513 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.08799
+deletions 24.6835%
+insertions 0%
+labelError 33.5443%
+seqError 85%
+substitutions 8.86076%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 652 took 0.758381 seconds (0.037919 secs/seq, 996887 its/sec, 730.815 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 6.91282
+deletions 24.0506%
+insertions 0%
+labelError 32.9114%
+seqError 75%
+substitutions 8.86076%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 653 took 0.75566 seconds (0.037783 secs/seq, 1.00048e+06 its/sec, 733.446 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 6.72848
+deletions 20.8861%
+insertions 0%
+labelError 27.2152%
+seqError 65%
+substitutions 6.32911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+best network (labelError)
+saving to transcription@2018.01.17-14.21.07.336130.best_labelError.save
+
+epoch 654 took 0.757136 seconds (0.0378568 secs/seq, 998526 its/sec, 732.017 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 6.74513
+deletions 21.519%
+insertions 0.632911%
+labelError 29.7468%
+seqError 70%
+substitutions 7.59494%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 655 took 0.759297 seconds (0.0379649 secs/seq, 995684 its/sec, 729.933 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.06479
+deletions 21.519%
+insertions 0%
+labelError 30.3797%
+seqError 75%
+substitutions 8.86076%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 656 took 0.759489 seconds (0.0379744 secs/seq, 995432 its/sec, 729.749 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 6.63185
+deletions 21.519%
+insertions 0%
+labelError 31.0127%
+seqError 65%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+best network (ctcError)
+saving to transcription@2018.01.17-14.21.07.336130.best_ctcError.save
+
+epoch 657 took 0.758651 seconds (0.0379325 secs/seq, 996532 its/sec, 730.555 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 6.91701
+deletions 20.2532%
+insertions 0%
+labelError 29.7468%
+seqError 65%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 658 took 0.757883 seconds (0.0378942 secs/seq, 997542 its/sec, 731.295 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.05272
+deletions 19.6203%
+insertions 1.26582%
+labelError 31.0127%
+seqError 80%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 659 took 0.758725 seconds (0.0379362 secs/seq, 996435 its/sec, 730.484 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.45524
+deletions 23.4177%
+insertions 0.632911%
+labelError 33.5443%
+seqError 90%
+substitutions 9.49367%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 660 took 0.75893 seconds (0.0379465 secs/seq, 996166 its/sec, 730.286 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.95229
+deletions 24.0506%
+insertions 0.632911%
+labelError 35.443%
+seqError 80%
+substitutions 10.7595%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 661 took 0.760942 seconds (0.0380471 secs/seq, 993532 its/sec, 728.355 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.33441
+deletions 21.519%
+insertions 0%
+labelError 34.8101%
+seqError 75%
+substitutions 13.2911%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 662 took 0.760479 seconds (0.038024 secs/seq, 994137 its/sec, 728.799 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 7.64652
+deletions 25.3165%
+insertions 0%
+labelError 37.9747%
+seqError 80%
+substitutions 12.6582%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 663 took 0.766971 seconds (0.0383485 secs/seq, 985722 its/sec, 722.63 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 6.97137
+deletions 20.2532%
+insertions 0%
+labelError 27.8481%
+seqError 75%
+substitutions 7.59494%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save
+
+epoch 664 took 0.765396 seconds (0.0382698 secs/seq, 987750 its/sec, 724.117 MwtOps/sec)
+------------------------------
+train errors (running):
+ctcError 6.90301
+deletions 22.7848%
+insertions 0%
+labelError 32.9114%
+seqError 65%
+substitutions 10.1266%
+------------------------------
+saving to transcription@2018.01.17-14.21.07.336130.last.save

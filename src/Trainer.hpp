@@ -290,7 +290,8 @@ struct Trainer: public DataExporter
 	{
 		real_t error = 0;
 		if (mdl)
-		{							
+		{
+			out << "use mdl" << endl;
 			mdlSeqErrors.clear();
 			mdlMlErrors.clear();
 			if((mdlSamples > 1) || (seqsPerWeightUpdate > 1))
@@ -344,6 +345,7 @@ struct Trainer: public DataExporter
 		}
 		else
 		{
+			out << "not use mdl" << endl;
 			seq = apply_distortions(seq);
 			error =	net->train(*seq);
 			revert_distortions();

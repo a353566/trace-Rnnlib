@@ -43,6 +43,9 @@ struct BiasLayer: public Layer
 	{
 		return errors;
 	}
+	void output() {
+		std::cout << "BiasLayer" << endl;
+	}
 };
 
 #endif

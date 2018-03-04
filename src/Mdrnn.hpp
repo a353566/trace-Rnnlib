@@ -199,7 +199,7 @@ struct Mdrnn
 		else if (type == "softsign_lstm")
 		{
 			layer = new LstmLayer<Softsign, Softsign, Logistic>(name, directions, size, 1);
-		}	
+		}
 		else
 		{
 			check(false, "layer type " + type + " unknown");
@@ -362,6 +362,7 @@ struct Mdrnn
 		inputLayer->copy_inputs(seq.inputs);
 		LOOP(Layer* layer, hiddenLayers)
 		{
+			layer->output();
 			feed_forward_layer(layer);
 		}
 		LOOP(Layer* layer, outputLayers)

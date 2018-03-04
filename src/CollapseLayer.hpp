@@ -75,6 +75,9 @@ struct CollapseLayer: public Layer
 	{
 		copy(outputErrors[get_out_coords(coords)], inputErrors[coords]);
 	}
+	void output() {
+		std::cout << "CollapseLayer" << endl;
+	}
 };
 
 #endif

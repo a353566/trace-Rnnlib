@@ -372,6 +372,9 @@ template <class CI, class CO, class G> struct LstmLayer: public Layer
 		return WeightContainer::instance().get_weights(peepRange);
 	}
 #endif
+	void output() {
+		std::cout << "LstmLayer" << endl;
+	}
 };
 
 #endif

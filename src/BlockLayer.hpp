@@ -94,6 +94,9 @@ struct BlockLayer: public Layer
 			outIt += sourceSize;
 		}
 	}
+	void output() {
+		std::cout << "BlockLayer" << endl;
+	}
 };
 
 #endif

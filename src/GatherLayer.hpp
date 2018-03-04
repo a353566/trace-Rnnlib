@@ -65,6 +65,9 @@ struct GatherLayer: public Layer
 			errBegin += dist;
 		}
 	}
+	void output() {
+		std::cout << "GatherLayer" << endl;
+	}
 };
 
 #endif

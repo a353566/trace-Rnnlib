@@ -139,10 +139,10 @@ struct Layer: public DataExporter
 		outputErrors.reshape(outputActivations, 0);
 	}
 	virtual void start_sequence()
-	{	
+	{
 		assert(!in(source->output_seq_shape(), 0));
 		inputActivations.reshape(source->output_seq_shape(), 0);
-		outputActivations.reshape(source->output_seq_shape(), 0);	
+		outputActivations.reshape(source->output_seq_shape(), 0);
 		reshape_errors();
 	}
 	virtual const View<real_t> out_acts(const vector<int>& coords)
@@ -157,6 +157,9 @@ struct Layer: public DataExporter
 	virtual void feed_back(const vector<int>& coords){}
 	virtual void update_derivs(const vector<int>& coords){}
 	virtual const View<real_t> weights(){return View<real_t>();}
+	void output() {
+		std::cout << "Layer" << endl;
+	}
 };
 
 ostream& operator << (ostream& out, const Layer& l)
@@ -173,6 +176,9 @@ struct FlatLayer: public Layer
 	FlatLayer(const string& name, const vector<int>& dirs, size_t size, Layer* src = 0):
 		Layer(name, dirs, size, size, src)
 	{}
+	void output() {
+		std::cout << "FlatLayer" << endl;
+	}
 };
 
 #endif

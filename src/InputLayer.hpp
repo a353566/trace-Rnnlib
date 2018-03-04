@@ -37,6 +37,9 @@ struct InputLayer: public Layer
 		this->outputActivations = inputs;
  		this->outputErrors.reshape(this->outputActivations, 0);
 	}
+	void output() {
+		std::cout << "InputLayer" << endl;
+	}
 };
 
 #endif

@@ -285,13 +285,12 @@ struct Trainer: public DataExporter
 			revert_distortions();
 		}
 		return error;
-	}	
+	}
 	real_t differentiate(const DataSequence* seq)
 	{
 		real_t error = 0;
 		if (mdl)
 		{
-			out << "use mdl" << endl;
 			mdlSeqErrors.clear();
 			mdlMlErrors.clear();
 			if((mdlSamples > 1) || (seqsPerWeightUpdate > 1))
@@ -345,11 +344,9 @@ struct Trainer: public DataExporter
 		}
 		else
 		{
-			out << "not use mdl" << endl;
 			seq = apply_distortions(seq);
 			error =	net->train(*seq);
 			revert_distortions();
-
 		}
 		return error;
 	}

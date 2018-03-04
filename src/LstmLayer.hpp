@@ -77,7 +77,7 @@ template <class CI, class CO, class G> struct LstmLayer: public Layer
 			peepRange(peepSource ? peepSource->peepRange 
 					  : WeightContainer::instance().new_parameters(peepsPerBlock*numBlocks, name, name, name + "_peepholes"))
 #endif
-	{		
+	{
 		if (peepSource)
 		{
 			WeightContainer::instance().link_layers(name, name, name + "_peepholes", peepRange.first, peepRange.second);

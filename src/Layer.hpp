@@ -157,7 +157,7 @@ struct Layer: public DataExporter
 	virtual void feed_back(const vector<int>& coords){}
 	virtual void update_derivs(const vector<int>& coords){}
 	virtual const View<real_t> weights(){return View<real_t>();}
-	void output() {
+	virtual void output() {
 		std::cout << "Layer" << endl;
 	}
 };

@@ -44,6 +44,9 @@ struct IdentityLayer: public FlatLayer
 	{
 		copy(this->outputErrors[coords], this->inputErrors[coords]);
 	}
+	void output() {
+		std::cout << "IdentityLayer" << std::endl;
+	}
 };
 
 #endif

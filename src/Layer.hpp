@@ -176,7 +176,7 @@ struct FlatLayer: public Layer
 	FlatLayer(const string& name, const vector<int>& dirs, size_t size, Layer* src = 0):
 		Layer(name, dirs, size, size, src)
 	{}
-	void output() {
+	virtual void output() {
 		std::cout << "FlatLayer" << endl;
 	}
 };

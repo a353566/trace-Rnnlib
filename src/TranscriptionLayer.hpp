@@ -279,6 +279,9 @@ struct TranscriptionLayer: public SoftmaxLayer, public NetworkOutput
 		}
 		return ctcError;
 	}
+	void output() {
+		std::cout << "TranscriptionLayer" << std::endl;
+	}
 };
 
 #endif

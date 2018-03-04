@@ -79,6 +79,9 @@ struct SoftmaxLayer: public FlatLayer
 			t.get<0>() = t.get<1>() * (t.get<2>() - Z);
 		}
 	}
+	virtual void output() {
+		std::cout << "SoftmaxLayer" << std::endl;
+	}
 };
 
 #endif

@@ -51,6 +51,9 @@ template <class F> struct NeuronLayer: public FlatLayer
 			t.get<0>() = F::deriv(t.get<1>()) * t.get<2>();
 		}
 	}
+	void output() {
+		std::cout << "NeuronLayer" << std::endl;
+	}
 };
 
 #endif

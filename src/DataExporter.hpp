@@ -31,6 +31,7 @@ along with RNNLIB.  If not, see <http://www.gnu.org/licenses/>.*/
 struct Val
 {
 	virtual void print(ostream& out) const = 0;
+	// load 別人將資料裝過來
 	virtual bool load(istream& in, ostream& out = cout)
 	{
 		return false;
@@ -121,8 +122,8 @@ template <typename T> struct SeqBufferVal: public Val
 			if (labels)
 			{
 				out << "LABELS: " << *labels << endl;
-//				print_range(out, *labels);
-//				out << endl;
+				//print_range(out, *labels);
+				//out << endl;
 			}
 			out << array;
 		}

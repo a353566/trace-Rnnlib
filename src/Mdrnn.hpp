@@ -357,17 +357,37 @@ struct Mdrnn
 	}
 	virtual void feed_forward(const DataSequence& seq)
 	{
+		static bool isOutput = false;
 		check(seq.inputs.size(), "empty inputs in sequence\n" + str(seq));
 		errors.clear();
 		inputLayer->copy_inputs(seq.inputs);
 		LOOP(Layer* layer, hiddenLayers)
 		{
-			layer->output();
 			feed_forward_layer(layer);
 		}
 		LOOP(Layer* layer, outputLayers)
 		{
 			feed_forward_layer(layer);
+		}
+		
+		if (!isOutput) {
+			int i = 0;
+			cout << i++ << ": ";
+			inputLayer->print(cout);
+			cout << " \n";
+			LOOP(Layer* layer, hiddenLayers)
+			{
+				cout << i++ << ": ";
+				layer->print(cout);
+				cout << " \n";
+			}
+			LOOP(Layer* layer, outputLayers)
+			{
+				cout << i++ << ": ";
+				layer->print(cout);
+				cout << " \n";
+			}	
+			isOutput = true;
 		}
 	}
 	virtual real_t calculate_output_errors(const DataSequence& seq)

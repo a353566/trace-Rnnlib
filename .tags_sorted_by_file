@@ -176,6 +176,7 @@ acts	src\BiasLayer.hpp	/^	View<real_t> acts;$/;"	m	struct:BiasLayer
 errors	src\BiasLayer.hpp	/^	View<real_t> errors;$/;"	m	struct:BiasLayer
 out_acts	src\BiasLayer.hpp	/^	const View<real_t> out_acts(const vector<int>& coords)$/;"	f	struct:BiasLayer
 out_errs	src\BiasLayer.hpp	/^	const View<real_t> out_errs(const vector<int>& coords)$/;"	f	struct:BiasLayer
+output	src\BiasLayer.hpp	/^	void output() {$/;"	f	struct:BiasLayer
 ~BiasLayer	src\BiasLayer.hpp	/^	~BiasLayer(){}$/;"	f	struct:BiasLayer
 BlockLayer	src\BlockLayer.hpp	/^	BlockLayer(Layer* src, const vector<size_t>& blockshape):$/;"	f	struct:BlockLayer
 BlockLayer	src\BlockLayer.hpp	/^struct BlockLayer: public Layer$/;"	s
@@ -187,6 +188,7 @@ feed_back	src\BlockLayer.hpp	/^	void feed_back(const vector<int>& outCoords)$/;"
 feed_forward	src\BlockLayer.hpp	/^	void feed_forward(const vector<int>& outCoords)$/;"	f	struct:BlockLayer
 inCoords	src\BlockLayer.hpp	/^	vector<int> inCoords;$/;"	m	struct:BlockLayer
 outSeqShape	src\BlockLayer.hpp	/^	vector<size_t> outSeqShape;$/;"	m	struct:BlockLayer
+output	src\BlockLayer.hpp	/^	void output() {$/;"	f	struct:BlockLayer
 print	src\BlockLayer.hpp	/^	void print(ostream& out = cout) const$/;"	f	struct:BlockLayer
 sourceSize	src\BlockLayer.hpp	/^	size_t sourceSize;$/;"	m	struct:BlockLayer
 start_sequence	src\BlockLayer.hpp	/^	void start_sequence()$/;"	f	struct:BlockLayer
@@ -220,6 +222,7 @@ feed_back	src\CollapseLayer.hpp	/^	void feed_back(const vector<int>& coords)$/;"
 feed_forward	src\CollapseLayer.hpp	/^	void feed_forward(const vector<int>& coords)$/;"	f	struct:CollapseLayer
 get_out_coords	src\CollapseLayer.hpp	/^	vector<int> get_out_coords(const vector<int>& inCoords)$/;"	f	struct:CollapseLayer
 outSeqShape	src\CollapseLayer.hpp	/^	vector<size_t> outSeqShape;$/;"	m	struct:CollapseLayer
+output	src\CollapseLayer.hpp	/^	void output() {$/;"	f	struct:CollapseLayer
 start_sequence	src\CollapseLayer.hpp	/^	virtual void start_sequence()$/;"	f	struct:CollapseLayer
 ConfigFile	src\ConfigFile.hpp	/^	ConfigFile(const string& fname, char readLineChar = '_'):$/;"	f	struct:ConfigFile
 ConfigFile	src\ConfigFile.hpp	/^struct ConfigFile$/;"	s
@@ -399,6 +402,7 @@ _INCLUDED_GatherLayer_h	src\GatherLayer.hpp	19;"	d
 feed_back	src\GatherLayer.hpp	/^	void feed_back(const vector<int>& outCoords)$/;"	f	struct:GatherLayer
 feed_forward	src\GatherLayer.hpp	/^	void feed_forward(const vector<int>& outCoords)$/;"	f	struct:GatherLayer
 get_size	src\GatherLayer.hpp	/^	int get_size(vector<Layer*>& srcs)$/;"	f	struct:GatherLayer
+output	src\GatherLayer.hpp	/^	void output() {$/;"	f	struct:GatherLayer
 sources	src\GatherLayer.hpp	/^	vector<Layer*> sources;$/;"	m	struct:GatherLayer
 GradientCheck	src\GradientCheck.hpp	/^	GradientCheck(ostream& o, Mdrnn* n, const DataSequence& s, unsigned sf = 6, $/;"	f	struct:GradientCheck
 GradientCheck	src\GradientCheck.hpp	/^struct GradientCheck$/;"	s
@@ -649,10 +653,12 @@ IdentityLayer	src\IdentityLayer.hpp	/^struct IdentityLayer: public FlatLayer$/;"
 _INCLUDED_IdentityLayer_h	src\IdentityLayer.hpp	19;"	d
 feed_back	src\IdentityLayer.hpp	/^	void feed_back(const vector<int>& coords)$/;"	f	struct:IdentityLayer
 feed_forward	src\IdentityLayer.hpp	/^	void feed_forward(const vector<int>& coords)$/;"	f	struct:IdentityLayer
+output	src\IdentityLayer.hpp	/^	void output() {$/;"	f	struct:IdentityLayer
 InputLayer	src\InputLayer.hpp	/^	InputLayer(const string& name, size_t numSeqDims, size_t size, const vector<string>& inputLabels):$/;"	f	struct:InputLayer
 InputLayer	src\InputLayer.hpp	/^struct InputLayer: public Layer$/;"	s
 _INCLUDED_InputLayer_h	src\InputLayer.hpp	19;"	d
 copy_inputs	src\InputLayer.hpp	/^	template<typename T> void copy_inputs(const SeqBuffer<T>& inputs)$/;"	f	struct:InputLayer
+output	src\InputLayer.hpp	/^	void output() {$/;"	f	struct:InputLayer
 ~InputLayer	src\InputLayer.hpp	/^	~InputLayer(){}$/;"	f	struct:InputLayer
 FlatLayer	src\Layer.hpp	/^	FlatLayer(const string& name, const vector<int>& dirs, size_t size, Layer* src = 0):$/;"	f	struct:FlatLayer
 FlatLayer	src\Layer.hpp	/^	FlatLayer(const string& name, size_t numSeqDims, size_t size, Layer* src = 0):$/;"	f	struct:FlatLayer
@@ -675,6 +681,8 @@ num_seq_dims	src\Layer.hpp	/^	virtual size_t num_seq_dims() const$/;"	f	struct:L
 operator <<	src\Layer.hpp	/^ostream& operator << (ostream& out, const Layer& l)$/;"	f
 out_acts	src\Layer.hpp	/^	virtual const View<real_t> out_acts(const vector<int>& coords)$/;"	f	struct:Layer
 out_errs	src\Layer.hpp	/^	virtual const View<real_t> out_errs(const vector<int>& coords)$/;"	f	struct:Layer
+output	src\Layer.hpp	/^	virtual void output() {$/;"	f	struct:FlatLayer
+output	src\Layer.hpp	/^	virtual void output() {$/;"	f	struct:Layer
 outputActivations	src\Layer.hpp	/^	SeqBuffer<real_t> outputActivations;$/;"	m	struct:Layer
 outputErrors	src\Layer.hpp	/^	SeqBuffer<real_t> outputErrors;$/;"	m	struct:Layer
 output_seq_begin	src\Layer.hpp	/^	virtual SeqIterator output_seq_begin() const$/;"	f	struct:Layer
@@ -745,6 +753,7 @@ numBlocks	src\LstmLayer.hpp	/^	size_t numBlocks;$/;"	m	struct:LstmLayer
 numCells	src\LstmLayer.hpp	/^	size_t numCells;$/;"	m	struct:LstmLayer
 oldStates	src\LstmLayer.hpp	/^	vector<View<real_t> > oldStates;$/;"	m	struct:LstmLayer
 outGateActs	src\LstmLayer.hpp	/^	SeqBuffer<real_t> outGateActs;$/;"	m	struct:LstmLayer
+output	src\LstmLayer.hpp	/^	void output() {$/;"	f	struct:LstmLayer
 peepRange	src\LstmLayer.hpp	/^	pair<size_t, size_t> peepRange;$/;"	m	struct:LstmLayer
 peepSource	src\LstmLayer.hpp	/^	LstmLayer<CI,CO,G>* peepSource;$/;"	m	struct:LstmLayer
 peepsPerBlock	src\LstmLayer.hpp	/^	size_t peepsPerBlock;$/;"	m	struct:LstmLayer
@@ -961,6 +970,7 @@ _INCLUDED_NeuronLayer_h	src\NeuronLayer.hpp	19;"	d
 feed_back	src\NeuronLayer.hpp	/^	void feed_back(const vector<int>& coords)$/;"	f	struct:NeuronLayer
 feed_forward	src\NeuronLayer.hpp	/^	void feed_forward(const vector<int>& coords)$/;"	f	struct:NeuronLayer
 init	src\NeuronLayer.hpp	/^	void init()$/;"	f	struct:NeuronLayer
+output	src\NeuronLayer.hpp	/^	void output() {$/;"	f	struct:NeuronLayer
 ~NeuronLayer	src\NeuronLayer.hpp	/^	~NeuronLayer(){}$/;"	f	struct:NeuronLayer
 Optimiser	src\Optimiser.hpp	/^	Optimiser(vector<real_t>& weights, vector<real_t>& derivatives):$/;"	f	struct:Optimiser
 Optimiser	src\Optimiser.hpp	/^struct Optimiser$/;"	s
@@ -1041,6 +1051,7 @@ _INCLUDED_SoftmaxLayer_h	src\SoftmaxLayer.hpp	19;"	d
 feed_back	src\SoftmaxLayer.hpp	/^	void feed_back(const vector<int>& coords)$/;"	f	struct:SoftmaxLayer
 feed_forward	src\SoftmaxLayer.hpp	/^	void feed_forward(const vector<int>& coords)$/;"	f	struct:SoftmaxLayer
 logActivations	src\SoftmaxLayer.hpp	/^	SeqBuffer<Log<real_t> > logActivations;$/;"	m	struct:SoftmaxLayer
+output	src\SoftmaxLayer.hpp	/^	virtual void output() {$/;"	f	struct:SoftmaxLayer
 start_sequence	src\SoftmaxLayer.hpp	/^	void start_sequence()$/;"	f	struct:SoftmaxLayer
 targetLabels	src\SoftmaxLayer.hpp	/^	vector<string> targetLabels;$/;"	m	struct:SoftmaxLayer
 unnormedActivations	src\SoftmaxLayer.hpp	/^	SeqBuffer<real_t> unnormedActivations;$/;"	m	struct:SoftmaxLayer
@@ -1172,6 +1183,7 @@ dEdYTerms	src\TranscriptionLayer.hpp	/^	vector<Log<real_t> > dEdYTerms;$/;"	m	st
 forwardVariables	src\TranscriptionLayer.hpp	/^	SeqBuffer<Log<real_t> > forwardVariables;$/;"	m	struct:TranscriptionLayer
 make_target_labels	src\TranscriptionLayer.hpp	/^	vector<string> make_target_labels(const vector<string>& labs)$/;"	f	struct:TranscriptionLayer
 out	src\TranscriptionLayer.hpp	/^	ostream& out;$/;"	m	struct:TranscriptionLayer
+output	src\TranscriptionLayer.hpp	/^	void output() {$/;"	f	struct:TranscriptionLayer
 outputLabelSeq	src\TranscriptionLayer.hpp	/^	vector<int> outputLabelSeq;$/;"	m	struct:TranscriptionLayer
 path_to_string	src\TranscriptionLayer.hpp	/^	vector<int>& path_to_string(const vector<int>& path) const$/;"	f	struct:TranscriptionLayer
 prior_label_prob	src\TranscriptionLayer.hpp	/^	virtual const Log<real_t>& prior_label_prob(int label)$/;"	f	struct:TranscriptionLayer

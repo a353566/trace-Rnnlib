@@ -1042,6 +1042,18 @@ outer_a_squared	.\src\Matrix.hpp	/^static void outer_a_squared(const real_t *aBe
 outer_a_squared	.\src\Matrix.hpp	/^template<class R> static void outer_a_squared(const R& a, real_t *M, const R&b)$/;"	f
 outfile	.\utils\max_jacobian.py	/^outfile = args[2]$/;"	v
 outfile	.\utils\normalise_netcdf.py	/^outfile = netcdf_helpers.NetCDFFile(outputFilename, 'w')$/;"	v
+output	.\src\BiasLayer.hpp	/^	void output() {$/;"	f	struct:BiasLayer
+output	.\src\BlockLayer.hpp	/^	void output() {$/;"	f	struct:BlockLayer
+output	.\src\CollapseLayer.hpp	/^	void output() {$/;"	f	struct:CollapseLayer
+output	.\src\GatherLayer.hpp	/^	void output() {$/;"	f	struct:GatherLayer
+output	.\src\IdentityLayer.hpp	/^	void output() {$/;"	f	struct:IdentityLayer
+output	.\src\InputLayer.hpp	/^	void output() {$/;"	f	struct:InputLayer
+output	.\src\Layer.hpp	/^	virtual void output() {$/;"	f	struct:FlatLayer
+output	.\src\Layer.hpp	/^	virtual void output() {$/;"	f	struct:Layer
+output	.\src\LstmLayer.hpp	/^	void output() {$/;"	f	struct:LstmLayer
+output	.\src\NeuronLayer.hpp	/^	void output() {$/;"	f	struct:NeuronLayer
+output	.\src\SoftmaxLayer.hpp	/^	virtual void output() {$/;"	f	struct:SoftmaxLayer
+output	.\src\TranscriptionLayer.hpp	/^	void output() {$/;"	f	struct:TranscriptionLayer
 output	.\utils\max_jacobian.py	/^	output = int(f.split('\/')[-2].split('_')[-1])$/;"	v
 outputActivations	.\src\Layer.hpp	/^	SeqBuffer<real_t> outputActivations;$/;"	m	struct:Layer
 outputArray	.\utils\normalise_netcdf.py	/^	outputArray = inputVar.getValue()$/;"	v

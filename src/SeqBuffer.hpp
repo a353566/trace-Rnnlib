@@ -27,7 +27,7 @@ template <class R> struct CoordIterator
 	vector<int> directions;
 	vector<int> pt;
 	bool end;
-		
+	
 	//functions
 	CoordIterator (const R& sh, const vector<int>& dirs = empty_list_of<int>(), bool reverse = false):
 		shape(sh),

@@ -313,7 +313,7 @@ struct Mdrnn
 		{
 			Layer* from = hiddenLevels.at(levelNum)[i];
 			connect_layers(from, to);
-		}	
+		}
 	}
 	int add_hidden_level(const string& type, int size, bool recurrent = true, const string& name = "hidden", bool addBias = true)
 	{
@@ -326,13 +326,22 @@ struct Mdrnn
 	{
 		layer->start_sequence();
 		pair<CONN_IT, CONN_IT> connRange = connections.equal_range(layer);
+		int layerNum=0;
 		for (SeqIterator it = layer->input_seq_begin(); !it.end; ++it)
 		{
 			LOOP (PLC c, connRange)
 			{
 				c.second->feed_forward(*it);
-			}			
+			}
 			layer->feed_forward(*it);
+			layerNum++;
+		}
+		static int isOutputEnough = 0;
+		if (isOutputEnough < 100) {
+			out << i << " : ";
+			layer->print(out);
+			out << " \n";
+			isOutputEnough++;
 		}
 	}
 	void feed_back_layer(Layer* layer)
@@ -357,7 +366,6 @@ struct Mdrnn
 	}
 	virtual void feed_forward(const DataSequence& seq)
 	{
-		static bool isOutput = false;
 		check(seq.inputs.size(), "empty inputs in sequence\n" + str(seq));
 		errors.clear();
 		inputLayer->copy_inputs(seq.inputs);
@@ -370,25 +378,26 @@ struct Mdrnn
 			feed_forward_layer(layer);
 		}
 		
+		/*static bool isOutput = false;
 		if (!isOutput) {
 			int i = 0;
-			cout << i++ << ": ";
-			inputLayer->print(cout);
-			cout << " \n";
+			out << i++ << ": ";
+			inputLayer->print(out);
+			out << " \n";
 			LOOP(Layer* layer, hiddenLayers)
 			{
-				cout << i++ << ": ";
-				layer->print(cout);
-				cout << " \n";
+				out << i++ << ": ";
+				layer->print(out);
+				out << " \n";
 			}
 			LOOP(Layer* layer, outputLayers)
 			{
-				cout << i++ << ": ";
-				layer->print(cout);
-				cout << " \n";
+				out << i++ << ": ";
+				layer->print(out);
+				out << " \n";
 			}	
 			isOutput = true;
-		}
+		}*/
 	}
 	virtual real_t calculate_output_errors(const DataSequence& seq)
 	{

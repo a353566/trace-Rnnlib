@@ -70,7 +70,7 @@ template <class T> struct MultiArray
 	}
 	virtual void resize_data()
 	{
-		data.resize(product(shape));
+    data.resize(product(shape));
 		strides.resize(shape.size());
 		strides.back() = 1;
 		for (int i = shape.size()-2; i >= 0; --i)

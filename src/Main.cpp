@@ -162,6 +162,7 @@ int main(int argc, char* argv[])
 	}
 	if (gradCheck)
  	{
+    out << "main.cpp (if gradCheck == true)" <<endl;
 		out << "data header:" << endl << header << endl;
 		out << *testSeq; 
 		prt_line(out);
@@ -172,6 +173,7 @@ int main(int argc, char* argv[])
  	}
 	else if (jacobianCoords.size())
 	{
+    out << "main.cpp (if jacobianCoords.size() == true)" <<endl;
 		PRINT(dataset, out);
 		PRINT(datafile, out);
 		out << endl;
@@ -198,6 +200,7 @@ int main(int argc, char* argv[])
 	}
 	else if (display)
 	{
+    out << "main.cpp (if display == true)" <<endl;
 		out << "data header:" << endl << header << endl;
 		out << "displaying sequence " << displaySequence << endl;
 		out << *testSeq; 
@@ -210,11 +213,13 @@ int main(int argc, char* argv[])
 	}
 	else if (conf.get<bool>("errorTest", false))
 	{
+    out << "main.cpp (if conf.get<bool>(\"errorTest\", false) == true)" <<endl;
 		trainer.calculate_all_errors();
 		conf.warn_unused(out);
 	}
 	else
 	{
+    out << "main.cpp else (QAQ)" <<endl;
 		out << "trainer:" << endl;
 		trainer.train(saveName);
 	}

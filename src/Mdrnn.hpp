@@ -16,7 +16,8 @@ You should have received a copy of the GNU General Public License
 along with RNNLIB.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #ifndef _INCLUDED_Mdrnn_h  
-#define _INCLUDED_Mdrnn_h  
+#define _INCLUDED_Mdrnn_h
+//#define _INCLUDED_Mdrnn_h_DEBUG
 
 #include "InputLayer.hpp"
 #include "BiasLayer.hpp"
@@ -326,7 +327,22 @@ struct Mdrnn
 	{
 		layer->start_sequence();
 		pair<CONN_IT, CONN_IT> connRange = connections.equal_range(layer);
+#ifndef _INCLUDED_Mdrnn_h_DEBUG
+		for (SeqIterator it = layer->input_seq_begin(); !it.end; ++it)
+		{
+			LOOP (PLC c, connRange)
+			{
+				c.second->feed_forward(*it);
+			}
+			layer->feed_forward(*it);
+		}
+#else
 		int layerNum=0;
+		static int isOutputEnough = 1;
+		if (isOutputEnough < 100) {
+      out << isOutputEnough << ": ";
+			layer->print(out);
+		}
 		for (SeqIterator it = layer->input_seq_begin(); !it.end; ++it)
 		{
 			LOOP (PLC c, connRange)
@@ -336,13 +352,12 @@ struct Mdrnn
 			layer->feed_forward(*it);
 			layerNum++;
 		}
-		static int isOutputEnough = 0;
 		if (isOutputEnough < 100) {
-			out << i << " : ";
-			layer->print(out);
-			out << " \n";
+			out << " : " << layerNum;
+			out << " (OK) \n";
 			isOutputEnough++;
 		}
+#endif
 	}
 	void feed_back_layer(Layer* layer)
 	{
@@ -377,7 +392,6 @@ struct Mdrnn
 		{
 			feed_forward_layer(layer);
 		}
-		
 		/*static bool isOutput = false;
 		if (!isOutput) {
 			int i = 0;

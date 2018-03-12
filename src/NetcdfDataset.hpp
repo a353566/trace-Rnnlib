@@ -16,7 +16,8 @@ You should have received a copy of the GNU General Public License
 along with RNNLIB.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #ifndef _INCLUDED_NetcdfDataset_h  
-#define _INCLUDED_NetcdfDataset_h  
+#define _INCLUDED_NetcdfDataset_h
+//#define DEBUG
 
 #include <functional>
 #include <algorithm>
@@ -104,6 +105,23 @@ template<class T> static bool load_nc_array(const NcFile& ncf, const string& nam
 		}
 		dest.resize(product(counts));
 		bool success = v->get(&dest.front(), &counts.front());
+#ifdef DEBUG
+    cout << "head:name(" << name << ") " 
+        << "type(" << typeid(T).name() << ") "
+        << "count(" << count << ") "
+        << "counts(" << str(counts) << ") "
+        << "offsets(" << str(offsets) << ") "
+        << "\n dest.size(" << dest.size() << ") "
+        << "\n";
+    for (int i=0; i<dest.size(); i++) {
+      cout << dest[i] << " ";
+      if (i>20) {
+        cout << "...";
+        break;
+      }
+    }
+    cout << endl;
+#endif
 		if (!success)
 		{
 			dest.resize(0);
@@ -381,13 +399,19 @@ struct NetcdfDataset
 			DataSequence* seq = new DataSequence(header.inputSize, in(task, "regression") ? header.outputSize : 0);
 			vector<int> inputShape = flip(inputSeqDims[i]);
 			int inputCount = product(inputShape);
-			vector<int> targetShape = flip(targetSeqDims[i]);
+			vector<int> targetShape;
+			if (task == "classification") {
+				targetShape.push_back(1);
+			} else {
+				targetShape = flip(targetSeqDims[i]);
+			}
 			int targetCount = product(targetShape);
 			load_to_seq_buffer(seq->inputs, inputShape, "inputs", true, offsets.first, inputCount);
  			if (find_variable("importance"))
  			{
  				load_to_seq_buffer_with_depth(seq->importance, targetShape, 1, "importance", true, offsets.second, targetCount);
  			}
+			
 			if (in(task, "regression"))
 			{
 				if (task == "sequence_regression")
@@ -398,7 +422,9 @@ struct NetcdfDataset
 			}
 			else if (task == "classification")
 			{
-				load_to_seq_buffer_with_depth(seq->targetClasses, targetShape, 1, "targetClasses", true, offsets.second, targetCount);
+				//cout << "(look) line 425" <<endl;
+				//load_to_seq_buffer_with_depth(seq->targetClasses, targetShape, 1, "targetClasses", true, offsets.second, targetCount);
+				load_to_seq_buffer_with_depth(seq->targetClasses, targetShape, 1, "targetClasses", true, i, 1);
 			}
 			else if (in(task, "discrete"))
 			{
@@ -425,6 +451,7 @@ struct NetcdfDataset
 				}
 				seq->targetLabelSeq = str_to_label_seq(get_string("targetStrings", i), header.targetLabels);				
 			}
+			
 			seq->tag = get_string("seqTags", i, false);
 			sequences.push_back(seq);
 			offsets += make_pair(inputCount, targetCount);
@@ -605,7 +632,7 @@ struct DataList
 	{
 		PRINT(numSequences, out);
 		PRINT(numTimesteps, out);
-//		if(verbose)
+		//if(verbose)
 		{
 			out << "avg timesteps/seq = " << (real_t) numTimesteps / (real_t)numSequences << endl;
 		}
@@ -616,7 +643,7 @@ struct DataList
 		out << filenames.size() << " filenames"<< endl;
 		print_range(out, filenames, string("\n"));
 		out << endl;
-//		if (verbose)
+		//if (verbose)
 		{
 			out << "inputSize = " << headers.front().inputSize << endl;
 			out << "outputSize = " << headers.front().outputSize << endl;

@@ -58,11 +58,14 @@ struct ClassificationLayer: public NetworkOutput
 		outputs.clear();
 		targets.reshape(seq.targetClasses.seq_shape(), 0);
 		real_t crossEntropyError = 0;
+    int i=0;
+    out << "calculate_errors LOOP test" <<endl;
 		LOOP(int pt, span(seq.targetClasses.seq_size()))
 		{
 			int outputClass = output_class(pt);
 			outputs += outputClass;
 			int targetClass = seq.targetClasses[pt].front();
+      out << "pt=" << pt << " targetClass=" << targetClass <<endl;
 			if (targetClass >= 0)
 			{
 				View<int> targs = targets[pt];	
@@ -71,6 +74,7 @@ struct ClassificationLayer: public NetworkOutput
 				++confusionMatrix[targetClass][outputClass];
 			}
 		}
+    out << "calculate_errors LOOP test (over)" <<endl;
 		errorMap.clear();
 		LOOP (int i, indices(confusionMatrix))
 		{

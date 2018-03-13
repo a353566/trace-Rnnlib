@@ -90,7 +90,10 @@ struct TranscriptionLayer: public SoftmaxLayer, public NetworkOutput
 		LOOP(int i, span(outputActivations.seq_size()))
 		{
 			path += arg_max(outputActivations[i]);
-		}
+      out << "outputActivations.size():" << outputActivations.size() <<endl;
+      out << outputActivations.print(out) <<endl;
+      out << "(OK)" <<endl;
+	  }
 		return path_to_string(path);
 	}
 	virtual const Log<real_t>& prior_label_prob(int label)

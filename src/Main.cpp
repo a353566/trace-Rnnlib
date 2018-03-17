@@ -34,7 +34,7 @@ vector<string> validDatasets = list_of<string>("train")("test")("val");
 int main(int argc, char* argv[])
 {
 	if (argc < 2)
-	{
+	{	// 後面沒有其他檔案的話，補上說明資訊
 		cout << "usage rnnlib [config_options] config_file" << endl;
 		cout << "config_options syntax: --<variable_name>=<variable_value>" << endl;
 		cout << "whitespace not allowed in variable names or values" << endl;
@@ -43,7 +43,9 @@ int main(int argc, char* argv[])
 		cout << "repeated variables overwritten by last specified" << endl;
 		exit(0);
 	}
+	// 將最後一個參數(config file)傳入，建立基本資訊
 	ConfigFile conf(argv[argc - 1]);
+	// 格外的參數資訊
 	LOOP(int arg, span(1, argc - 1))
 	{
 		vector<string> argument = split<string>(argv[arg], '=', 2);
@@ -162,7 +164,6 @@ int main(int argc, char* argv[])
 	}
 	if (gradCheck)
  	{
-    out << "main.cpp (if gradCheck == true)" <<endl;
 		out << "data header:" << endl << header << endl;
 		out << *testSeq; 
 		prt_line(out);
@@ -173,7 +174,6 @@ int main(int argc, char* argv[])
  	}
 	else if (jacobianCoords.size())
 	{
-    out << "main.cpp (if jacobianCoords.size() == true)" <<endl;
 		PRINT(dataset, out);
 		PRINT(datafile, out);
 		out << endl;
@@ -200,7 +200,6 @@ int main(int argc, char* argv[])
 	}
 	else if (display)
 	{
-    out << "main.cpp (if display == true)" <<endl;
 		out << "data header:" << endl << header << endl;
 		out << "displaying sequence " << displaySequence << endl;
 		out << *testSeq; 
@@ -213,13 +212,11 @@ int main(int argc, char* argv[])
 	}
 	else if (conf.get<bool>("errorTest", false))
 	{
-    out << "main.cpp (if conf.get<bool>(\"errorTest\", false) == true)" <<endl;
 		trainer.calculate_all_errors();
 		conf.warn_unused(out);
 	}
 	else
 	{
-    out << "main.cpp else (QAQ)" <<endl;
 		out << "trainer:" << endl;
 		trainer.train(saveName);
 	}

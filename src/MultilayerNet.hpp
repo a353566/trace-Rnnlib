@@ -40,6 +40,8 @@ struct MultilayerNet: public Mdrnn
 		bool subsampleBias = conf.get<bool>("subsampleBias", false);
 		Vector<bool> recurrent = conf.get_list<bool>("recurrent", true, hiddenSizes.size());
 		Layer* input = this->get_input_layer();
+		// 將整個 hidden 都存在 hiddenLayers
+		// 且上下連接也做好
 		LOOP(int i, indices(hiddenSizes))
 		{
 			string level_suffix = int_to_sortable_string(i, hiddenSizes.size());
@@ -50,6 +52,7 @@ struct MultilayerNet: public Mdrnn
 			{
 				LOOP(Layer* l, hiddenLevels[i])
 				{
+					// new BlockLayer(l, hiddenBlocks.at(i)) 將前面的 l(hiddenLevels) 當來源，hiddenBlocks.at(i) = blockSize
 					blocks += this->add_layer(new BlockLayer(l, hiddenBlocks.at(i)));
 				}
 			}
@@ -67,6 +70,7 @@ struct MultilayerNet: public Mdrnn
 				input = this->add_layer(new GatherLayer("gather_" + level_suffix, topLayers));
 			}
 		}
+		// 檢查字元有沒有問題
 		conf.set_val("inputSize", inputLayer->output_size());
 		if (data.targetLabels.size())
 		{
@@ -92,6 +96,7 @@ struct MultilayerNet: public Mdrnn
 				}
 			}
 		}
+		// 最後的 output layer
 		string outputName = "output";
 		Layer* output = 0;
 		size_t outSeqDims = (in(task, "sequence_") ? 0 : num_seq_dims());

@@ -20,12 +20,14 @@ along with RNNLIB.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "MultiArray.hpp"
 
+// 走訪一個 block 會用到的區域範圍
+// 其中會有座標和方向 會帶領使用他的程式
 template <class R> struct CoordIterator
 {
 	//data
-	Vector<size_t> shape;
-	vector<int> directions;
-	vector<int> pt;
+	Vector<size_t> shape;	// Shape 3,4 : 走的區塊大小
+	vector<int> directions;	// 方向		 : 走的方向
+	vector<int> pt;			// shape 的 size : 目前的位置
 	bool end;
 	
 	//functions
@@ -44,9 +46,9 @@ template <class R> struct CoordIterator
 	}
 	void step(size_t d)
 	{
-		if (directions[d] > 0)
+		if (directions[d] > 0)	// 判斷方向
 		{
-			if (pt[d] == shape[d] - 1)
+			if (pt[d] == shape[d] - 1)	// 走到底的話
 			{
 				pt[d] = 0;
 				if (d)
@@ -65,7 +67,7 @@ template <class R> struct CoordIterator
 		}
 		else
 		{
-			if (pt[d] == 0)
+			if (pt[d] == 0)	// 走到底的話
 			{
 				pt[d] = shape[d]-1;
 				if (d)
@@ -95,6 +97,7 @@ template <class R> struct CoordIterator
 		}
 		return *this;
 	}
+	// star 的概念 回傳目前的位置
 	const vector<int>& operator* () const
 	{
 		return pt;

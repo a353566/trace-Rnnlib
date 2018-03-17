@@ -27,7 +27,7 @@ extern bool verbose;
 struct Layer: public DataExporter
 {
 	//typedefs
-//	typedef multi_array<real_t, 3> array3d;
+	//typedef multi_array<real_t, 3> array3d;
 	
 	//data
 	vector<int> directions;
@@ -40,7 +40,7 @@ struct Layer: public DataExporter
 	//functions
 	Layer(const string& name, size_t numSeqDims, size_t inputSize, size_t outputSize, Layer* src = 0):
 		DataExporter(name),
-		inputActivations(inputSize),
+		inputActivations(inputSize),	// 通常都給 0，來源確定後才會給定 size
 		outputActivations(outputSize),
 		inputErrors(inputSize),
 		outputErrors(outputSize),

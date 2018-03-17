@@ -144,8 +144,8 @@ struct DataHeader
 	int numDims;
 	Vector<string> inputLabels;
 	map<string, int> inputLabelCounts;
-	Vector<string> targetLabels;
-	map<string, int> targetLabelCounts;
+	Vector<string> targetLabels;        // 共有多少個單字(app)
+	map<string, int> targetLabelCounts;	// 每個單字(app)出現的次數
 	size_t inputSize;
 	size_t outputSize;
 	size_t numSequences;

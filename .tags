@@ -20,10 +20,10 @@ CONN_IT	.\src\Mdrnn.hpp	/^typedef multimap<const Layer*, Connection*>::iterator 
 CONST_CONN_IT	.\src\Mdrnn.hpp	/^typedef multimap<const Layer*, Connection*>::const_iterator CONST_CONN_IT;$/;"	t
 CONST_EXPORT_IT	.\src\DataExporter.hpp	/^typedef map<string, DataExporter*>::const_iterator CONST_EXPORT_IT;$/;"	t
 CONST_LAYER_IT	.\src\Mdrnn.hpp	/^typedef vector<Layer*>::const_iterator CONST_LAYER_IT;$/;"	t
-CONST_SEQ_IT	.\src\NetcdfDataset.hpp	32;"	d
+CONST_SEQ_IT	.\src\NetcdfDataset.hpp	33;"	d
 CONST_VAL_IT	.\src\DataExporter.hpp	/^typedef map<string, Val*>::const_iterator CONST_VAL_IT;$/;"	t
 COUT	.\src\Helpers.hpp	/^static ostream& COUT = cout;$/;"	v
-CVI	.\src\SeqBuffer.hpp	112;"	d
+CVI	.\src\SeqBuffer.hpp	115;"	d
 ClassificationLayer	.\src\ClassificationLayer.hpp	/^	ClassificationLayer(ostream& o, const vector<string>& labs):$/;"	f	struct:ClassificationLayer
 ClassificationLayer	.\src\ClassificationLayer.hpp	/^struct ClassificationLayer: public NetworkOutput$/;"	s
 CollapseLayer	.\src\CollapseLayer.hpp	/^	CollapseLayer(Layer* src, Layer* des, const vector<bool>& activDims = empty_list_of<bool>()):$/;"	f	struct:CollapseLayer
@@ -191,7 +191,7 @@ Rprop	.\src\Rprop.hpp	/^	Rprop(const string& name, ostream& o, vector<real_t>& w
 Rprop	.\src\Rprop.hpp	/^struct Rprop: public DataExporter, public Optimiser$/;"	s
 SAVE	.\src\DataExporter.hpp	28;"	d
 SCI	.\src\Helpers.hpp	/^typedef string::const_iterator SCI;$/;"	t
-SEQ_IT	.\src\NetcdfDataset.hpp	31;"	d
+SEQ_IT	.\src\NetcdfDataset.hpp	32;"	d
 SI	.\src\Helpers.hpp	/^typedef string::iterator SI;$/;"	t
 STDC_HEADERS	.\config.h	68;"	d
 SeqBuffer	.\src\SeqBuffer.hpp	/^	SeqBuffer(const SeqBuffer& sb)$/;"	f	struct:SeqBuffer
@@ -200,7 +200,7 @@ SeqBuffer	.\src\SeqBuffer.hpp	/^	SeqBuffer(size_t dep = 0):$/;"	f	struct:SeqBuff
 SeqBuffer	.\src\SeqBuffer.hpp	/^template <class T> struct SeqBuffer: public MultiArray<T>$/;"	s
 SeqBufferVal	.\src\DataExporter.hpp	/^	SeqBufferVal(const SeqBuffer<T>& a, const vector<string>* labs = 0):$/;"	f	struct:SeqBufferVal
 SeqBufferVal	.\src\DataExporter.hpp	/^template <typename T> struct SeqBufferVal: public Val$/;"	s
-SeqIterator	.\src\SeqBuffer.hpp	113;"	d
+SeqIterator	.\src\SeqBuffer.hpp	116;"	d
 Set	.\src\Container.hpp	/^	Set()$/;"	f	struct:Set
 Set	.\src\Container.hpp	/^	Set(const View<T>& v)$/;"	f	struct:Set
 Set	.\src\Container.hpp	/^	Set(const vector<T>& v)$/;"	f	struct:Set
@@ -363,21 +363,21 @@ begins	.\src\String.hpp	/^static bool begins(const string& str, const string& se
 bestEpochs	.\utils\plot_errors.py	/^bestEpochs = dict()$/;"	v
 best_label_seq	.\src\TranscriptionLayer.hpp	/^	vector<int>& best_label_seq() const$/;"	f	struct:TranscriptionLayer
 bias	.\src\Mdrnn.hpp	/^	BiasLayer bias;$/;"	m	struct:Mdrnn
-bidirectional	.\src\Mdrnn.hpp	/^	vector<bool> bidirectional;$/;"	m	struct:Mdrnn
+bidirectional	.\src\Mdrnn.hpp	/^	vector<bool> bidirectional;		\/\/ 雙向 (numDims)$/;"	m	struct:Mdrnn
 bigIm	.\examples\farsi_offline_handwriting\farsi_chars.py	/^		bigIm = Image.new(im.mode, (w,h), 255)$/;"	v
 bits_to_nats	.\src\Helpers.hpp	/^static real_t bits_to_nats(real_t bits)$/;"	f
 blank	.\src\TranscriptionLayer.hpp	/^	int blank;$/;"	m	struct:TranscriptionLayer
 blockArea	.\utils\plot_variables.py	/^				blockArea = numpy.product(blockDims)$/;"	v
 blockDims	.\utils\plot_variables.py	/^			blockDims = numpy.array(opt.blockDims.split(',')).astype(int)$/;"	v
 blockIndex	.\utils\plot_variables.py	/^								blockIndex = 0$/;"	v
-blockIterator	.\src\BlockLayer.hpp	/^	CVI blockIterator;$/;"	m	struct:BlockLayer
+blockIterator	.\src\BlockLayer.hpp	/^	CVI blockIterator;			\/\/ CoordIterator<const vector<size_t> > 走訪一個 block 會用到的區域範圍$/;"	m	struct:BlockLayer
 blockOffset	.\src\BlockLayer.hpp	/^	vector<int> blockOffset;$/;"	m	struct:BlockLayer
-blockShape	.\src\BlockLayer.hpp	/^	vector<size_t> blockShape;$/;"	m	struct:BlockLayer
+blockShape	.\src\BlockLayer.hpp	/^	vector<size_t> blockShape;	\/\/ Shape 3,4$/;"	m	struct:BlockLayer
 bound	.\src\Helpers.hpp	/^template <class T> static T bound (const T& v, const T& minVal, const T& maxVal)$/;"	f
 bound_range	.\src\Helpers.hpp	/^template <class R> static void bound_range (R& r, const typename boost::range_value<R>::type& minVal, const typename boost::range_value<R>::type& maxVal)$/;"	f
 breakOnError	.\src\GradientCheck.hpp	/^	bool breakOnError;$/;"	m	struct:GradientCheck
 build	.\src\Layer.hpp	/^	virtual void build()$/;"	f	struct:Layer
-build	.\src\Mdrnn.hpp	/^ 	virtual void build()$/;"	f	struct:Mdrnn
+build	.\src\Mdrnn.hpp	/^	virtual void build()$/;"	f	struct:Mdrnn
 build	.\src\Rprop.hpp	/^	void build()$/;"	f	struct:Rprop
 build	.\src\SteepestDescent.hpp	/^	void build()$/;"	f	struct:SteepestDescent
 build	.\src\WeightContainer.hpp	/^	void build()$/;"	f	struct:WeightContainer
@@ -497,7 +497,7 @@ dims	.\examples\arabic_offline_handwriting\arabic_offline.py	/^		dims = (image.s
 dims	.\examples\farsi_offline_handwriting\farsi_chars.py	/^				dims = (im.size[1], im.size[0])$/;"	v
 dims	.\examples\farsi_offline_handwriting\farsi_chars.py	/^				dims = (max(padDims[0], im.size[1]), max(padDims[1], im.size[0]))$/;"	v
 directions	.\src\Layer.hpp	/^	vector<int> directions;$/;"	m	struct:Layer
-directions	.\src\SeqBuffer.hpp	/^	vector<int> directions;$/;"	m	struct:CoordIterator
+directions	.\src\SeqBuffer.hpp	/^	vector<int> directions;	\/\/ 方向		 : 走的方向$/;"	m	struct:CoordIterator
 disjoint	.\src\Helpers.hpp	/^template<class T> static bool disjoint(const set<T>& s1, const set<T>& s2)$/;"	f
 display	.\src\DataExporter.cpp	/^void DataExportHandler::display(const string& path) const$/;"	f	class:DataExportHandler
 display	.\src\DataExporter.hpp	/^	template <typename T> void display(const SeqBuffer<T>& array, const string& name, const vector<string>* labels = 0)$/;"	f	struct:DataExporter
@@ -652,7 +652,7 @@ h	.\examples\farsi_offline_handwriting\farsi_chars.py	/^		h = max(padDims[1], im
 header	.\src\NetcdfDataset.hpp	/^	DataHeader header;	$/;"	m	struct:NetcdfDataset
 headers	.\src\NetcdfDataset.hpp	/^	vector<DataHeader> headers;$/;"	m	struct:DataList
 height	.\utils\plot_variables.py	/^						height = len(data[i]) \/ gridDims[0]$/;"	v
-hiddenLayers	.\src\Mdrnn.hpp	/^	vector<Layer*> hiddenLayers;$/;"	m	struct:Mdrnn
+hiddenLayers	.\src\Mdrnn.hpp	/^	vector<Layer*> hiddenLayers;	\/\/ 所有的 hiddenLayers 都會在這裡面$/;"	m	struct:Mdrnn
 hiddenLevels	.\src\Mdrnn.hpp	/^	vector<vector<Layer*> > hiddenLevels;$/;"	m	struct:Mdrnn
 hiddenMatch	.\utils\dump_weights.py	/^hiddenMatch = re.search('(hiddenSize) (\\S+)', text)$/;"	v
 hiddenSizes	.\utils\dump_weight_matrices.py	/^hiddenSizes = re.search('(hiddenSize) (\\S+)', text).group(2).split(',')$/;"	v
@@ -693,8 +693,8 @@ initDelta	.\src\Rprop.hpp	/^	real_t initDelta;$/;"	m	struct:Rprop
 inkmlfile	.\examples\arabic_online_handwriting\arabic_online.py	/^	inkmlfile = l.strip()$/;"	v
 inner_product	.\src\Helpers.hpp	/^template<class R1, class R2> static typename range_value<R1>::type inner_product(const R1& a, const R2& b, typename range_value<R1>::type c = 0)$/;"	f
 inputActivations	.\src\Layer.hpp	/^	SeqBuffer<real_t> inputActivations;$/;"	m	struct:Layer
-inputBlock	.\src\Mdrnn.hpp	/^	vector<size_t> inputBlock;	$/;"	m	struct:Mdrnn
-inputBlockLayer	.\src\Mdrnn.hpp	/^	Layer* inputBlockLayer;$/;"	m	struct:Mdrnn
+inputBlock	.\src\Mdrnn.hpp	/^	vector<size_t> inputBlock;		\/\/ inputBlock Shape 3,4$/;"	m	struct:Mdrnn
+inputBlockLayer	.\src\Mdrnn.hpp	/^	Layer* inputBlockLayer;			\/\/ Data input 連接到 inputBlock 算是第一層，也依照 inputBlock(3,4)大小設置(不過好像還沒有*W過)$/;"	m	struct:Mdrnn
 inputClasses	.\src\DataSequence.hpp	/^	SeqBuffer<int> inputClasses;$/;"	m	struct:DataSequence
 inputDims	.\utils\dump_weights.py	/^	inputDims = [re.search('(inputSize) (\\S+)', text).group(2)]$/;"	v
 inputDims	.\utils\dump_weights.py	/^	inputDims = opt.inputDims.split()$/;"	v
@@ -1161,7 +1161,7 @@ prob_t	.\src\Helpers.hpp	/^typedef Log<real_t> prob_t;$/;"	t
 product	.\src\Helpers.hpp	/^template <class R> static typename range_value<R>::type product(const R& r)$/;"	f
 prt_line	.\src\Helpers.hpp	/^static void prt_line(ostream& out = cout)$/;"	f
 pt	.\examples\arabic_online_handwriting\arabic_online.py	/^				pt = coords.split()$/;"	v
-pt	.\src\SeqBuffer.hpp	/^	vector<int> pt;$/;"	m	struct:CoordIterator
+pt	.\src\SeqBuffer.hpp	/^	vector<int> pt;			\/\/ shape 的 size : 目前的位置$/;"	m	struct:CoordIterator
 push_front	.\src\Container.hpp	/^	void push_front(const T& t)$/;"	f	struct:Vector
 r	.\utils\plot_variables.py	/^			r = data[::3]$/;"	v
 random	.\utils\shuffle_and_split.py	/^import random$/;"	i
@@ -1269,7 +1269,7 @@ set_error	.\src\ClassificationLayer.hpp	/^	real_t set_error(int pt, int targetCl
 set_seed	.\src\Random.cpp	/^unsigned int Random::set_seed(unsigned int seed)$/;"	f	class:Random
 set_val	.\src\ConfigFile.hpp	/^	template<class T> const T& set_val(const string& name, const T& val, bool valUsed = true)$/;"	f	struct:ConfigFile
 shape	.\src\MultiArray.hpp	/^	Vector<size_t> shape;$/;"	m	struct:MultiArray
-shape	.\src\SeqBuffer.hpp	/^	Vector<size_t> shape;$/;"	m	struct:CoordIterator
+shape	.\src\SeqBuffer.hpp	/^	Vector<size_t> shape;	\/\/ Shape 3,4 : 走的區塊大小$/;"	m	struct:CoordIterator
 shrink	.\src\Container.hpp	/^	Vector<T>& shrink(size_t length)$/;"	f	struct:Vector
 shuffle	.\src\Helpers.hpp	/^template<class R> static R& shuffle (R& r)$/;"	f
 shuffle_sequences	.\src\NetcdfDataset.hpp	/^	void shuffle_sequences()$/;"	f	struct:NetcdfDataset
@@ -1291,7 +1291,7 @@ slice	.\src\Container.hpp	/^	const View<T> slice(pair<int, int>& r) const$/;"	f	
 sort	.\src\Helpers.hpp	/^template <class R> static R& sort(R& r)$/;"	f
 source	.\src\FullConnection.hpp	/^	FullConnection* source;$/;"	m	struct:FullConnection
 source	.\src\Layer.hpp	/^	Layer* source;$/;"	m	struct:Layer
-sourceSize	.\src\BlockLayer.hpp	/^	size_t sourceSize;$/;"	m	struct:BlockLayer
+sourceSize	.\src\BlockLayer.hpp	/^	size_t sourceSize;			\/\/ 宣告時 會去取得 src 的 outputSize，所以 Layer creat 時不會主動做出這個數值$/;"	m	struct:BlockLayer
 sources	.\src\GatherLayer.hpp	/^	vector<Layer*> sources;$/;"	m	struct:GatherLayer
 span	.\src\Helpers.hpp	/^template <class T1, class T2> static integer_range<T2> span(T1 t1, T2 t2)$/;"	f
 span	.\src\Helpers.hpp	/^template <class T> static integer_range<T> span(T t)$/;"	f
@@ -1329,7 +1329,7 @@ substitutions	.\src\StringAlignment.hpp	/^	int substitutions;$/;"	m	struct:Strin
 sum	.\src\Helpers.hpp	/^template <class R> static typename range_value<R>::type sum(const R& r)$/;"	f
 sum_of_squares	.\src\Helpers.hpp	/^template <class R1, class R2> static typename range_value<R1>::type sum_of_squares(const R1& r1, const R2& r2)$/;"	f
 sum_right	.\src\Helpers.hpp	/^template<class T1, class T2> static T2 sum_right(const map<T1, T2>& m)$/;"	f
-symmetry	.\src\Mdrnn.hpp	/^	vector<bool> symmetry;$/;"	m	struct:Mdrnn
+symmetry	.\src\Mdrnn.hpp	/^	vector<bool> symmetry;			\/\/ 對稱 (numDims)$/;"	m	struct:Mdrnn
 sys	.\examples\arabic_offline_handwriting\arabic_offline.py	/^import sys$/;"	i
 sys	.\examples\arabic_online_handwriting\arabic_online.py	/^import sys$/;"	i
 sys	.\examples\farsi_offline_handwriting\farsi_chars.py	/^import sys$/;"	i
@@ -1343,9 +1343,9 @@ sys	.\utils\std_dev_mean.py	/^import sys$/;"	i
 tag	.\src\DataSequence.hpp	/^	string tag;$/;"	m	struct:DataSequence
 targetClasses	.\src\DataSequence.hpp	/^	SeqBuffer<int> targetClasses;$/;"	m	struct:DataSequence
 targetLabelCounts	.\src\NetcdfDataset.hpp	/^	map <string, real_t> targetLabelCounts;$/;"	m	struct:DataList
-targetLabelCounts	.\src\NetcdfDataset.hpp	/^	map<string, int> targetLabelCounts;$/;"	m	struct:DataHeader
+targetLabelCounts	.\src\NetcdfDataset.hpp	/^	map<string, int> targetLabelCounts;	\/\/ 每個單字(app)出現的次數$/;"	m	struct:DataHeader
 targetLabelSeq	.\src\DataSequence.hpp	/^	vector<int> targetLabelSeq;$/;"	m	struct:DataSequence
-targetLabels	.\src\NetcdfDataset.hpp	/^	Vector<string> targetLabels;$/;"	m	struct:DataHeader
+targetLabels	.\src\NetcdfDataset.hpp	/^	Vector<string> targetLabels;        \/\/ 共有多少個單字(app)$/;"	m	struct:DataHeader
 targetLabels	.\src\SoftmaxLayer.hpp	/^	vector<string> targetLabels;$/;"	m	struct:SoftmaxLayer
 targetPatterns	.\src\DataSequence.hpp	/^	SeqBuffer<real_t> targetPatterns;$/;"	m	struct:DataSequence
 targetSeqDims	.\src\NetcdfDataset.hpp	/^	SeqBuffer<int> targetSeqDims;$/;"	m	struct:NetcdfDataset

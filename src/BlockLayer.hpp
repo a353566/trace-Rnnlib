@@ -20,14 +20,15 @@ along with RNNLIB.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "Layer.hpp"
 
+// Block 
 struct BlockLayer: public Layer
 {
 	//data
-	vector<size_t> blockShape;
+	vector<size_t> blockShape;	// Shape 3,4
 	vector<int> blockOffset;
 	vector<int> inCoords;
-	size_t sourceSize;
-	CVI blockIterator;
+	size_t sourceSize;			// 宣告時 會去取得 src 的 outputSize，所以 Layer creat 時不會主動做出這個數值
+	CVI blockIterator;			// CoordIterator<const vector<size_t> > 走訪一個 block 會用到的區域範圍
 	vector<size_t> outSeqShape;
 		
 	//functions

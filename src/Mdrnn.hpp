@@ -46,15 +46,15 @@ struct Mdrnn
 	//data
 	ostream& out;
 	multimap<const Layer*, Connection*> connections;
-	vector<Layer*> hiddenLayers;
+	vector<Layer*> hiddenLayers;	// 所有的 hiddenLayers 都會在這裡面
 	vector<vector<Layer*> > hiddenLevels;
 	InputLayer* inputLayer;
 	vector<NetworkOutput*> outputs;
 	vector<Layer*> outputLayers;
-	vector<bool> bidirectional;
-	vector<bool> symmetry;
-	vector<size_t> inputBlock;	
-	Layer* inputBlockLayer;
+	vector<bool> bidirectional;		// 雙向 (numDims)
+	vector<bool> symmetry;			// 對稱 (numDims)
+	vector<size_t> inputBlock;		// inputBlock Shape 3,4
+	Layer* inputBlockLayer;			// Data input 連接到 inputBlock 算是第一層，也依照 inputBlock(3,4)大小設置(不過好像還沒有*W過)
 	BiasLayer bias;
 	vector<Layer*> recurrentLayers;
 	map<string, real_t> errors;
@@ -64,6 +64,8 @@ struct Mdrnn
 	//functions
 	Mdrnn(ostream& o, ConfigFile& conf, const DataHeader& data):
 		out(o),
+		// data.numDims = Dimensions = 2(EX:長*高)
+		// data.inputSize = inputPattSize = 1(資料維度 EX:RGB)
 		inputLayer(new InputLayer("input", data.numDims, data.inputSize, data.inputLabels)),
 		bidirectional(conf.get_list<bool>("bidirectional", true, data.numDims)),
 		symmetry(conf.get_list<bool>("symmetry", false, data.numDims)),
@@ -207,6 +209,7 @@ struct Mdrnn
 		}
 		return add_layer(layer, addBias, recurrent);
 	}
+	add_hidden_layers_to_level(type, size, recurrent, name, 0, levelNum, empty_list_of<bool>().repeat(num_seq_dims(), true), addBias);
 	Layer* add_hidden_layers_to_level(const string& type, int size, bool recurrent, const string& name,
 		 int dim, int levelNum, vector<int> directions, bool addBias = true)
 	{
@@ -218,7 +221,7 @@ struct Mdrnn
 			return layer;
 		}
 		else
-		{	
+		{
 			if (bidirectional[dim])
 			{
 				directions[dim] = -1;
@@ -228,12 +231,13 @@ struct Mdrnn
 			return add_hidden_layers_to_level(type, size, recurrent, name, dim + 1, levelNum, directions, addBias);
 		}
 	}
- 	virtual void build()
- 	{
+	virtual void build()
+	{
 		LOOP(vector<Layer*>& v, hiddenLevels)
 		{
 			LOOP(Layer* dest, v)
 			{
+				// 範例檔給的都是 false 所以先不管
 				if (is_mirror(dest))
 				{
 					vector<int> sourceDirs(dest->directions.size());
@@ -326,7 +330,10 @@ struct Mdrnn
 	void feed_forward_layer(Layer* layer)
 	{
 		layer->start_sequence();
-		pair<CONN_IT, CONN_IT> connRange = connections.equal_range(layer);
+		// typedef multimap<const Layer*, Connection*>::iterator CONN_IT ;
+		// typedef pair<const Layer*, Connection*> PLC;
+		// multimap<const Layer*, Connection*> connections;
+		pair<CONN_IT, CONN_IT> connRange = connections.equal_range(layer);	// 回傳範圍
 #ifndef _INCLUDED_Mdrnn_h_DEBUG
 		for (SeqIterator it = layer->input_seq_begin(); !it.end; ++it)
 		{
@@ -338,23 +345,32 @@ struct Mdrnn
 		}
 #else
 		int layerNum=0;
+		int layerNum2=0;
 		static int isOutputEnough = 1;
-		if (isOutputEnough < 100) {
-      out << isOutputEnough << ": ";
+		static const int isOutputEnoughCount = 1000;
+		if (isOutputEnough < isOutputEnoughCount) {
+			out << isOutputEnough << ": ";
 			layer->print(out);
 		}
+		bool db = !(isOutputEnough < isOutputEnoughCount);
 		for (SeqIterator it = layer->input_seq_begin(); !it.end; ++it)
 		{
 			LOOP (PLC c, connRange)
 			{
 				c.second->feed_forward(*it);
+				if (!db) {
+					out << endl;
+					c.second->print(out);
+				}
+				layerNum2++;
 			}
+			db = true;
 			layer->feed_forward(*it);
 			layerNum++;
 		}
-		if (isOutputEnough < 100) {
-			out << " : " << layerNum;
-			out << " (OK) \n";
+		if (isOutputEnough < isOutputEnoughCount) {
+			out << " : " << layerNum << " : " << layerNum2;
+			out << " (OK)"<<endl;
 			isOutputEnough++;
 		}
 #endif

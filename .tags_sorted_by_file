@@ -181,16 +181,16 @@ output	src\BiasLayer.hpp	/^	void output() {$/;"	f	struct:BiasLayer
 BlockLayer	src\BlockLayer.hpp	/^	BlockLayer(Layer* src, const vector<size_t>& blockshape):$/;"	f	struct:BlockLayer
 BlockLayer	src\BlockLayer.hpp	/^struct BlockLayer: public Layer$/;"	s
 _INCLUDED_BlockLayer_h	src\BlockLayer.hpp	19;"	d
-blockIterator	src\BlockLayer.hpp	/^	CVI blockIterator;$/;"	m	struct:BlockLayer
+blockIterator	src\BlockLayer.hpp	/^	CVI blockIterator;			\/\/ CoordIterator<const vector<size_t> > 走訪一個 block 會用到的區域範圍$/;"	m	struct:BlockLayer
 blockOffset	src\BlockLayer.hpp	/^	vector<int> blockOffset;$/;"	m	struct:BlockLayer
-blockShape	src\BlockLayer.hpp	/^	vector<size_t> blockShape;$/;"	m	struct:BlockLayer
+blockShape	src\BlockLayer.hpp	/^	vector<size_t> blockShape;	\/\/ Shape 3,4$/;"	m	struct:BlockLayer
 feed_back	src\BlockLayer.hpp	/^	void feed_back(const vector<int>& outCoords)$/;"	f	struct:BlockLayer
 feed_forward	src\BlockLayer.hpp	/^	void feed_forward(const vector<int>& outCoords)$/;"	f	struct:BlockLayer
 inCoords	src\BlockLayer.hpp	/^	vector<int> inCoords;$/;"	m	struct:BlockLayer
 outSeqShape	src\BlockLayer.hpp	/^	vector<size_t> outSeqShape;$/;"	m	struct:BlockLayer
 output	src\BlockLayer.hpp	/^	void output() {$/;"	f	struct:BlockLayer
 print	src\BlockLayer.hpp	/^	void print(ostream& out = cout) const$/;"	f	struct:BlockLayer
-sourceSize	src\BlockLayer.hpp	/^	size_t sourceSize;$/;"	m	struct:BlockLayer
+sourceSize	src\BlockLayer.hpp	/^	size_t sourceSize;			\/\/ 宣告時 會去取得 src 的 outputSize，所以 Layer creat 時不會主動做出這個數值$/;"	m	struct:BlockLayer
 start_sequence	src\BlockLayer.hpp	/^	void start_sequence()$/;"	f	struct:BlockLayer
 BinaryClassificationLayer	src\ClassificationLayer.hpp	/^	BinaryClassificationLayer(ostream& out, const string& name, size_t numSeqDims, const vector<string>& labels):$/;"	f	struct:BinaryClassificationLayer
 BinaryClassificationLayer	src\ClassificationLayer.hpp	/^struct BinaryClassificationLayer: public ClassificationLayer, public NeuronLayer<Logistic>$/;"	s
@@ -803,8 +803,8 @@ add_layer	src\Mdrnn.hpp	/^	Layer* add_layer(Layer* layer, bool addBias = false, 
 add_layer	src\Mdrnn.hpp	/^	Layer* add_layer(const string& type, const string& name, int size, $/;"	f	struct:Mdrnn
 add_output_layer	src\Mdrnn.hpp	/^	Layer* add_output_layer(NetworkOutput* output, bool addBias = true)$/;"	f	struct:Mdrnn
 bias	src\Mdrnn.hpp	/^	BiasLayer bias;$/;"	m	struct:Mdrnn
-bidirectional	src\Mdrnn.hpp	/^	vector<bool> bidirectional;$/;"	m	struct:Mdrnn
-build	src\Mdrnn.hpp	/^ 	virtual void build()$/;"	f	struct:Mdrnn
+bidirectional	src\Mdrnn.hpp	/^	vector<bool> bidirectional;		\/\/ 雙向 (numDims)$/;"	m	struct:Mdrnn
+build	src\Mdrnn.hpp	/^	virtual void build()$/;"	f	struct:Mdrnn
 calculate_errors	src\Mdrnn.hpp	/^	virtual real_t calculate_errors(const DataSequence& seq)$/;"	f	struct:Mdrnn
 calculate_output_errors	src\Mdrnn.hpp	/^	virtual real_t calculate_output_errors(const DataSequence& seq)$/;"	f	struct:Mdrnn
 collapse_layer	src\Mdrnn.hpp	/^	Layer* collapse_layer(Layer* src, Layer* dest, const vector<bool>& activeDims = empty_list_of<bool>())$/;"	f	struct:Mdrnn
@@ -821,10 +821,10 @@ feed_forward	src\Mdrnn.hpp	/^	virtual void feed_forward(const DataSequence& seq)
 feed_forward_layer	src\Mdrnn.hpp	/^	void feed_forward_layer(Layer* layer)$/;"	f	struct:Mdrnn
 gather_level	src\Mdrnn.hpp	/^	Layer* gather_level(const string& name, int levelNum)$/;"	f	struct:Mdrnn
 get_input_layer	src\Mdrnn.hpp	/^	Layer* get_input_layer() const$/;"	f	struct:Mdrnn
-hiddenLayers	src\Mdrnn.hpp	/^	vector<Layer*> hiddenLayers;$/;"	m	struct:Mdrnn
+hiddenLayers	src\Mdrnn.hpp	/^	vector<Layer*> hiddenLayers;	\/\/ 所有的 hiddenLayers 都會在這裡面$/;"	m	struct:Mdrnn
 hiddenLevels	src\Mdrnn.hpp	/^	vector<vector<Layer*> > hiddenLevels;$/;"	m	struct:Mdrnn
-inputBlock	src\Mdrnn.hpp	/^	vector<size_t> inputBlock;	$/;"	m	struct:Mdrnn
-inputBlockLayer	src\Mdrnn.hpp	/^	Layer* inputBlockLayer;$/;"	m	struct:Mdrnn
+inputBlock	src\Mdrnn.hpp	/^	vector<size_t> inputBlock;		\/\/ inputBlock Shape 3,4$/;"	m	struct:Mdrnn
+inputBlockLayer	src\Mdrnn.hpp	/^	Layer* inputBlockLayer;			\/\/ Data input 連接到 inputBlock 算是第一層，也依照 inputBlock(3,4)大小設置(不過好像還沒有*W過)$/;"	m	struct:Mdrnn
 inputLayer	src\Mdrnn.hpp	/^	InputLayer* inputLayer;$/;"	m	struct:Mdrnn
 is_mirror	src\Mdrnn.hpp	/^ 	bool is_mirror(const Layer* layer)$/;"	f	struct:Mdrnn
 is_recurrent	src\Mdrnn.hpp	/^	bool is_recurrent(const Layer* layer) const$/;"	f	struct:Mdrnn
@@ -838,7 +838,7 @@ outputs	src\Mdrnn.hpp	/^	vector<NetworkOutput*> outputs;$/;"	m	struct:Mdrnn
 print	src\Mdrnn.hpp	/^	virtual void print(ostream& out = cout) const$/;"	f	struct:Mdrnn
 print_output_shape	src\Mdrnn.hpp	/^	virtual void print_output_shape(ostream& out = cout) const$/;"	f	struct:Mdrnn
 recurrentLayers	src\Mdrnn.hpp	/^	vector<Layer*> recurrentLayers;$/;"	m	struct:Mdrnn
-symmetry	src\Mdrnn.hpp	/^	vector<bool> symmetry;$/;"	m	struct:Mdrnn
+symmetry	src\Mdrnn.hpp	/^	vector<bool> symmetry;			\/\/ 對稱 (numDims)$/;"	m	struct:Mdrnn
 train	src\Mdrnn.hpp	/^	virtual real_t train(const DataSequence& seq)$/;"	f	struct:Mdrnn
 ~Mdrnn	src\Mdrnn.hpp	/^	virtual ~Mdrnn()$/;"	f	struct:Mdrnn
 MultiArray	src\MultiArray.hpp	/^	MultiArray()$/;"	f	struct:MultiArray
@@ -878,7 +878,7 @@ name	src\Named.hpp	/^	string name;$/;"	m	struct:Named
 operator <<	src\Named.hpp	/^static ostream& operator << (ostream& out, const Named& n)$/;"	f
 print	src\Named.hpp	/^	void print(ostream& out = cout) const$/;"	f	struct:Named
 ~Named	src\Named.hpp	/^	virtual ~Named(){}$/;"	f	struct:Named
-CONST_SEQ_IT	src\NetcdfDataset.hpp	32;"	d
+CONST_SEQ_IT	src\NetcdfDataset.hpp	33;"	d
 DataHeader	src\NetcdfDataset.hpp	/^	DataHeader(const string& filename, const string& task, real_t dataFraction):$/;"	f	struct:DataHeader
 DataHeader	src\NetcdfDataset.hpp	/^struct DataHeader$/;"	s
 DataList	src\NetcdfDataset.hpp	/^	DataList(const vector<string>& filenams, const string& t, bool shuffle, real_t loadFrac):$/;"	f	struct:DataList
@@ -886,7 +886,7 @@ DataList	src\NetcdfDataset.hpp	/^struct DataList$/;"	s
 NetcdfDataset	src\NetcdfDataset.hpp	/^	NetcdfDataset(const string& fname, const string& t, int seqNum):$/;"	f	struct:NetcdfDataset
 NetcdfDataset	src\NetcdfDataset.hpp	/^	NetcdfDataset(const string& fname, const string& t, real_t dataFraction = 1.0):$/;"	f	struct:NetcdfDataset
 NetcdfDataset	src\NetcdfDataset.hpp	/^struct NetcdfDataset$/;"	s
-SEQ_IT	src\NetcdfDataset.hpp	31;"	d
+SEQ_IT	src\NetcdfDataset.hpp	32;"	d
 _INCLUDED_NetcdfDataset_h	src\NetcdfDataset.hpp	19;"	d
 clear_seq	src\NetcdfDataset.hpp	/^	void clear_seq()$/;"	f	struct:DataList
 dataFraction	src\NetcdfDataset.hpp	/^	real_t dataFraction;$/;"	m	struct:DataList
@@ -945,8 +945,8 @@ size	src\NetcdfDataset.hpp	/^	int size() const$/;"	f	struct:DataList
 size	src\NetcdfDataset.hpp	/^	int size() const$/;"	f	struct:NetcdfDataset
 start	src\NetcdfDataset.hpp	/^	DataSequence* start()$/;"	f	struct:DataList
 targetLabelCounts	src\NetcdfDataset.hpp	/^	map <string, real_t> targetLabelCounts;$/;"	m	struct:DataList
-targetLabelCounts	src\NetcdfDataset.hpp	/^	map<string, int> targetLabelCounts;$/;"	m	struct:DataHeader
-targetLabels	src\NetcdfDataset.hpp	/^	Vector<string> targetLabels;$/;"	m	struct:DataHeader
+targetLabelCounts	src\NetcdfDataset.hpp	/^	map<string, int> targetLabelCounts;	\/\/ 每個單字(app)出現的次數$/;"	m	struct:DataHeader
+targetLabels	src\NetcdfDataset.hpp	/^	Vector<string> targetLabels;        \/\/ 共有多少個單字(app)$/;"	m	struct:DataHeader
 targetSeqDims	src\NetcdfDataset.hpp	/^	SeqBuffer<int> targetSeqDims;$/;"	m	struct:NetcdfDataset
 task	src\NetcdfDataset.hpp	/^	string task;$/;"	m	struct:DataList
 task	src\NetcdfDataset.hpp	/^	string task;$/;"	m	struct:NetcdfDataset
@@ -1004,14 +1004,14 @@ prevAvgDelta	src\Rprop.hpp	/^	real_t prevAvgDelta;$/;"	m	struct:Rprop
 prevDerivs	src\Rprop.hpp	/^	vector<real_t> prevDerivs;$/;"	m	struct:Rprop
 print	src\Rprop.hpp	/^	void print(ostream& out = cout) const$/;"	f	struct:Rprop
 update_weights	src\Rprop.hpp	/^	void update_weights()$/;"	f	struct:Rprop
-CVI	src\SeqBuffer.hpp	112;"	d
+CVI	src\SeqBuffer.hpp	115;"	d
 CoordIterator	src\SeqBuffer.hpp	/^	CoordIterator (const R& sh, const vector<int>& dirs = empty_list_of<int>(), bool reverse = false):$/;"	f	struct:CoordIterator
 CoordIterator	src\SeqBuffer.hpp	/^template <class R> struct CoordIterator$/;"	s
 SeqBuffer	src\SeqBuffer.hpp	/^	SeqBuffer(const SeqBuffer& sb)$/;"	f	struct:SeqBuffer
 SeqBuffer	src\SeqBuffer.hpp	/^	SeqBuffer(const vector<size_t>& shape, size_t dep):$/;"	f	struct:SeqBuffer
 SeqBuffer	src\SeqBuffer.hpp	/^	SeqBuffer(size_t dep = 0):$/;"	f	struct:SeqBuffer
 SeqBuffer	src\SeqBuffer.hpp	/^template <class T> struct SeqBuffer: public MultiArray<T>$/;"	s
-SeqIterator	src\SeqBuffer.hpp	113;"	d
+SeqIterator	src\SeqBuffer.hpp	116;"	d
 _INCLUDED_SeqBuffer_h	src\SeqBuffer.hpp	19;"	d
 at	src\SeqBuffer.hpp	/^	const View<T> at(int coord)$/;"	f	struct:SeqBuffer
 at	src\SeqBuffer.hpp	/^	const View<const T> at(int coord) const$/;"	f	struct:SeqBuffer
@@ -1019,7 +1019,7 @@ back	src\SeqBuffer.hpp	/^	const View<T> back(const vector<int>& dirs = empty_lis
 begin	src\SeqBuffer.hpp	/^	SeqIterator begin(const vector<int>& dirs = empty_list_of<int>()) const$/;"	f	struct:SeqBuffer
 begin	src\SeqBuffer.hpp	/^	void begin()$/;"	f	struct:CoordIterator
 depth	src\SeqBuffer.hpp	/^	size_t depth;$/;"	m	struct:SeqBuffer
-directions	src\SeqBuffer.hpp	/^	vector<int> directions;$/;"	m	struct:CoordIterator
+directions	src\SeqBuffer.hpp	/^	vector<int> directions;	\/\/ 方向		 : 走的方向$/;"	m	struct:CoordIterator
 end	src\SeqBuffer.hpp	/^	bool end;$/;"	m	struct:CoordIterator
 front	src\SeqBuffer.hpp	/^	const View<T> front(const vector<int>& dirs = empty_list_of<int>())$/;"	f	struct:SeqBuffer
 num_seq_dims	src\SeqBuffer.hpp	/^ 	size_t num_seq_dims() const$/;"	f	struct:SeqBuffer
@@ -1030,7 +1030,7 @@ operator =	src\SeqBuffer.hpp	/^	template<class T2> SeqBuffer<T>& operator =(cons
 operator []	src\SeqBuffer.hpp	/^	const View<T> operator[](int coord)$/;"	f	struct:SeqBuffer
 operator []	src\SeqBuffer.hpp	/^	const View<const T> operator[](int coord) const$/;"	f	struct:SeqBuffer
 print	src\SeqBuffer.hpp	/^	void print(ostream& out) const$/;"	f	struct:SeqBuffer
-pt	src\SeqBuffer.hpp	/^	vector<int> pt;$/;"	m	struct:CoordIterator
+pt	src\SeqBuffer.hpp	/^	vector<int> pt;			\/\/ shape 的 size : 目前的位置$/;"	m	struct:CoordIterator
 rbegin	src\SeqBuffer.hpp	/^	SeqIterator rbegin(const vector<int>& dirs = empty_list_of<int>()) const$/;"	f	struct:SeqBuffer
 reshape	src\SeqBuffer.hpp	/^	template<class R> void reshape(const R& newSeqShap, const T& fillval)$/;"	f	struct:SeqBuffer
 reshape	src\SeqBuffer.hpp	/^	template<class R> void reshape(const R& newSeqShape)$/;"	f	struct:SeqBuffer
@@ -1042,7 +1042,7 @@ seq_means	src\SeqBuffer.hpp	/^	vector<real_t>& seq_means() const$/;"	f	struct:Se
 seq_offset	src\SeqBuffer.hpp	/^	int seq_offset(const vector<int>& coords)$/;"	f	struct:SeqBuffer
 seq_shape	src\SeqBuffer.hpp	/^	const View<const size_t> seq_shape() const$/;"	f	struct:SeqBuffer
 seq_size	src\SeqBuffer.hpp	/^	size_t seq_size() const$/;"	f	struct:SeqBuffer
-shape	src\SeqBuffer.hpp	/^	Vector<size_t> shape;$/;"	m	struct:CoordIterator
+shape	src\SeqBuffer.hpp	/^	Vector<size_t> shape;	\/\/ Shape 3,4 : 走的區塊大小$/;"	m	struct:CoordIterator
 step	src\SeqBuffer.hpp	/^	void step(size_t d)$/;"	f	struct:CoordIterator
 ~SeqBuffer	src\SeqBuffer.hpp	/^	virtual ~SeqBuffer()$/;"	f	struct:SeqBuffer
 SoftmaxLayer	src\SoftmaxLayer.hpp	/^	SoftmaxLayer(const string& name, size_t numSeqDims, const vector<string>& labs):$/;"	f	struct:SoftmaxLayer

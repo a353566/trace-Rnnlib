@@ -48,7 +48,7 @@ template <class CI, class CO, class G> struct LstmLayer: public Layer
 #ifdef PEEPS
 	LstmLayer<CI,CO,G>* peepSource;
 	pair<size_t, size_t> peepRange;
-#endif		
+#endif
 	
 	//functions
 	LstmLayer(const string& name, const vector<int>& directions, size_t nb, size_t cpb = 1, LstmLayer<CI,CO,G>* ps = 0):
@@ -99,7 +99,7 @@ template <class CI, class CO, class G> struct LstmLayer: public Layer
 		DISPLAY(inGateActs);
 		DISPLAY(forgetGateActs);
 		DISPLAY(outGateActs);
-	}	
+	}
 	~LstmLayer()
 	{
 	}

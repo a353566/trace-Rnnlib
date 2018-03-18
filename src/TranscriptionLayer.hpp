@@ -17,6 +17,7 @@ along with RNNLIB.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #ifndef _INCLUDED_TranscriptionLayer_h  
 #define _INCLUDED_TranscriptionLayer_h  
+//#define _INCLUDED_TranscriptionLayer_h_DEBUG  
 
 #include <boost/bimap.hpp>
 #include "SoftmaxLayer.hpp"
@@ -90,10 +91,15 @@ struct TranscriptionLayer: public SoftmaxLayer, public NetworkOutput
 		LOOP(int i, span(outputActivations.seq_size()))
 		{
 			path += arg_max(outputActivations[i]);
-      out << "outputActivations.size():" << outputActivations.size() <<endl;
-      out << outputActivations.print(out) <<endl;
-      out << "(OK)" <<endl;
-	  }
+		}
+#ifdef _INCLUDED_TranscriptionLayer_h_DEBUG
+		// mason
+		out << "outputActivations.size()=" << outputActivations.size() <<endl;
+		out << "outputActivations.depth=" << outputActivations.depth <<endl;
+		out << "path.size()=" << path.size() <<endl;
+		out << path <<endl;
+		out << "path(OK)" <<endl;
+#endif
 		return path_to_string(path);
 	}
 	virtual const Log<real_t>& prior_label_prob(int label)

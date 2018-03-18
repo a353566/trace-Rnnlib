@@ -168,7 +168,7 @@ struct Mdrnn
 			{
 				make_layer_recurrent(layer);
 			}
-		}				
+		}
 		return layer;
 	}
 	Layer* add_layer(const string& type, const string& name, int size, 
@@ -400,6 +400,11 @@ struct Mdrnn
 		check(seq.inputs.size(), "empty inputs in sequence\n" + str(seq));
 		errors.clear();
 		inputLayer->copy_inputs(seq.inputs);
+#ifdef _INCLUDED_Mdrnn_h_DEBUG
+		if (!verbose) {
+			seq.print(out);
+		}
+#endif
 		LOOP(Layer* layer, hiddenLayers)
 		{
 			feed_forward_layer(layer);
